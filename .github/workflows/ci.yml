@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest httpx
+
+      - name: Run pipeline (data -> model -> temporal -> agent -> report -> dashboard)
+        run: |
+          chmod +x run_pipeline.sh
+          ./run_pipeline.sh
+
+      - name: Verify determinism (run again, diff key metrics)
+        run: |
+          cp artifacts/metrics.json /tmp/metrics_run1.json
+          ./run_pipeline.sh
+          python3 -c "
+          import json
+          a = json.load(open('/tmp/metrics_run1.json'))
+          b = json.load(open('artifacts/metrics.json'))
+          assert a == b, 'Pipeline is not deterministic across runs -- see README Section 6'
+          print('Determinism verified: identical metrics.json across two full runs')
+          "
+
+      - name: Check README/METRICS have not drifted from artifacts
+        run: |
+          python3 evaluation/report.py
+          git diff --exit-code -- README.md METRICS.md             || (echo "README.md / METRICS.md are stale. Run: python evaluation/report.py" && exit 1)
+
+      - name: Run test suite
+        run: python3 -m pytest tests/ -v
