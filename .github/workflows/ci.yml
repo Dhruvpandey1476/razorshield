@@ -22,12 +22,21 @@ jobs:
           pip install -r requirements.txt
           pip install pytest httpx
 
-      - name: Run pipeline (data -> model -> temporal -> agent -> report -> dashboard)
+      # Runs BEFORE the pipeline, against the committed artifacts. The
+      # invariant we care about is "the published prose matches the numbers
+      # we shipped" -- checking it after a re-run would instead demand
+      # bit-identical results across OS/toolchain, which we do not claim.
+      - name: Check committed README/METRICS match committed artifacts
+        run: |
+          python3 evaluation/report.py
+          git diff --exit-code -- README.md METRICS.md             || (echo "README.md / METRICS.md do not match artifacts/. Run: python evaluation/report.py" && exit 1)
+
+      - name: Run pipeline end to end (data -> model -> temporal -> agent -> report -> dashboard)
         run: |
           chmod +x run_pipeline.sh
           ./run_pipeline.sh
 
-      - name: Verify determinism (run again, diff key metrics)
+      - name: Verify determinism on this runner (two full runs must agree)
         run: |
           cp artifacts/metrics.json /tmp/metrics_run1.json
           ./run_pipeline.sh
@@ -35,14 +44,9 @@ jobs:
           import json
           a = json.load(open('/tmp/metrics_run1.json'))
           b = json.load(open('artifacts/metrics.json'))
-          assert a == b, 'Pipeline is not deterministic across runs -- see README Section 6'
+          assert a == b, 'Pipeline is not deterministic run-to-run -- see README Section 6'
           print('Determinism verified: identical metrics.json across two full runs')
           "
-
-      - name: Check README/METRICS have not drifted from artifacts
-        run: |
-          python3 evaluation/report.py
-          git diff --exit-code -- README.md METRICS.md             || (echo "README.md / METRICS.md are stale. Run: python evaluation/report.py" && exit 1)
 
       - name: Run test suite
         run: python3 -m pytest tests/ -v

@@ -135,7 +135,7 @@ uvicorn backend.main:app --reload --port 8000  # then open http://localhost:8000
 ```
 
 Total pipeline runtime: about two minutes on a laptop CPU.
-i have added the api now run and then also give me 5 min demo and presenrtin
+
 ---
 
 ## 3. Honest results
@@ -309,9 +309,22 @@ So hand-typed numbers were removed from the process entirely:
    allowlisted policy constant.
 4. CI runs the full pipeline plus a determinism check on every push.
 
-If you re-run `./run_pipeline.sh` and get different numbers from the
-ones in Section 3, that is a reproducibility bug worth reporting — not
-expected variation.
+**What "deterministic" does and does not mean here.** The pipeline is
+deterministic *run to run on a fixed environment*: same machine, same
+pinned dependencies, two runs, byte-identical `metrics.json`. CI asserts
+exactly that on every push.
+
+It is **not** bit-identical across operating systems. Running the same
+pinned versions on Linux instead of Windows shifts the trained model
+slightly — XGBoost's floating-point arithmetic differs between platform
+builds — which moves the reported figures in the third decimal place and
+a handful of individual transactions across the alert threshold. The
+qualitative result is unchanged; the exact digits are not. That is why
+the drift guard compares the committed prose against the committed
+artifacts rather than against a fresh run on a different machine, and
+why the artifacts are committed rather than regenerated on clone. If you
+re-run on your own machine and see small differences from Section 3,
+that is the expected cross-platform variation — not a bug.
 
 ### On methodology, stated plainly
 
