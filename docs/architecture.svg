@@ -15,7 +15,7 @@
   <rect x="0.5" y="0.5" width="1179" height="639" fill="none" stroke="#e5e7eb"/>
 
   <text x="32" y="42" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#111827">RazorShield — why one model isn't enough</text>
-  <text x="32" y="68" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6b7280">Three events from the same held-out window, traced through both layers. Measured, not illustrative.</text>
+  <text x="32" y="68" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6b7280">Three events from the same synthetic held-out window, traced through both layers. Measured, not illustrative.</text>
 
   <!-- layer bands -->
   <rect x="286" y="98" width="188" height="424" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
@@ -78,7 +78,7 @@
 
   <!-- ===== Lane C : legitimate flash sale ===== -->
   <text x="32" y="462" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">Flash sale · CTRL-001</text>
-  <text x="32" y="481" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">110 txns · real customers</text>
+  <text x="32" y="481" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">110 txns · legitimate traffic</text>
   <text x="32" y="498" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#15803d">NOT fraud — the control</text>
 
   <line x1="196" y1="472" x2="280" y2="472" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
