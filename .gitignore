@@ -1,0 +1,22 @@
+# Deliberately NOT ignoring artifacts/ -- this repo ships with a
+# pre-computed pipeline run committed so the app works immediately
+# after clone + install, without judges needing to wait on a training
+# run before anything renders. Regenerate anytime with ./run_pipeline.sh.
+
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+.env
+.env.local
+
+.DS_Store
+Thumbs.db
+
+*.log
+/tmp/

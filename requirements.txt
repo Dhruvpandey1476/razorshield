@@ -1,0 +1,19 @@
+# Pinned to EXACT versions, not minimums -- this matters for
+# reproducibility. XGBoost in particular can change its default
+# tree-building algorithm across versions, which changes the trained
+# model (and therefore every downstream metric) even with the same
+# random_state. If you install with unpinned ">=" versions, your
+# numbers may not match the README exactly, even though the pipeline
+# is internally deterministic run-to-run on a fixed environment.
+pandas==3.0.2
+numpy==2.4.4
+scikit-learn==1.8.0
+xgboost==3.4.1
+shap==0.52.0
+Faker==40.36.0
+langgraph==1.2.11
+fastapi==0.141.1
+uvicorn==0.52.4
+matplotlib==3.10.8
+joblib==1.5.3
+requests==2.33.1
