@@ -20,15 +20,22 @@ def load(name, default=None):
 
 
 def load_audit():
+    """First entry per event wins -- that is the pipeline run.
+
+    run_pipeline.sh truncates the log before investigating every event, so the
+    first block of entries is always the canonical run. Anything after it comes
+    from ad-hoc investigations triggered in the live app, which must not change
+    what the published report says.
+    """
     path = os.path.join(ART_DIR, "audit_trail.jsonl")
     if not os.path.exists(path):
         return []
     seen = {}
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         for line in f:
             if line.strip():
                 r = json.loads(line)
-                seen[r.get("spike_id")] = r      # last run wins
+                seen.setdefault(r.get("spike_id"), r)
     return list(seen.values())
 
 
@@ -50,7 +57,6 @@ def build():
     audit = load_audit()
 
     q = m.get("model_quality", {})
-    comb = m.get("combined_system", {})
     sc = m.get("standalone_vs_combined", {})
     marg = m.get("marginal_contribution_of_temporal_layer", {})
     L = []
