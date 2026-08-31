@@ -2,7 +2,9 @@ services:
   - type: web
     name: razorshield
     env: python
-    buildCommand: "pip install -r requirements.txt && chmod +x run_pipeline.sh && ./run_pipeline.sh"
+    # artifacts/ is committed, so the pipeline does not need to run here.
+    # Regenerate locally with ./run_pipeline.sh and commit the result.
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn backend.main:app --host 0.0.0.0 --port $PORT"
     healthCheckPath: /health
     envVars:

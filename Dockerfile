@@ -2,9 +2,8 @@
 # Build: docker build -t razorshield .
 # Run:   docker run -p 8000:8000 -e RAZORPAY_WEBHOOK_SECRET=... razorshield
 #
-# The pipeline runs once at build time so the image starts with
-# artifacts/ already populated -- no first-request delay, and every
-# deploy is reproducible from the same pinned dependency versions.
+# artifacts/ is committed, so the image ships with a populated pipeline
+# run and starts immediately. Regenerate with ./run_pipeline.sh locally.
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -19,9 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Generate data, train the model, run the agent on all spike events --
-# baked into the image so the container is immediately useful on start.
-RUN chmod +x run_pipeline.sh && ./run_pipeline.sh
+RUN chmod +x run_pipeline.sh
 
 EXPOSE 8000
 
