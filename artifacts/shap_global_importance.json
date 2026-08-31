@@ -1,0 +1,90 @@
+[
+  {
+    "feature": "amount_inr",
+    "mean_abs_shap": 1.39956
+  },
+  {
+    "feature": "device_txn_count_1h",
+    "mean_abs_shap": 1.37489
+  },
+  {
+    "feature": "amount_zscore_for_merchant",
+    "mean_abs_shap": 0.79624
+  },
+  {
+    "feature": "ip_txn_count_1h",
+    "mean_abs_shap": 0.5437
+  },
+  {
+    "feature": "merchant_risk_score",
+    "mean_abs_shap": 0.5429
+  },
+  {
+    "feature": "hour_of_day",
+    "mean_abs_shap": 0.33832
+  },
+  {
+    "feature": "is_new_customer",
+    "mean_abs_shap": 0.33621
+  },
+  {
+    "feature": "billing_shipping_mismatch",
+    "mean_abs_shap": 0.30442
+  },
+  {
+    "feature": "customer_txn_count_24h",
+    "mean_abs_shap": 0.2482
+  },
+  {
+    "feature": "merchant_category_saas",
+    "mean_abs_shap": 0.11658
+  },
+  {
+    "feature": "method_card",
+    "mean_abs_shap": 0.09455
+  },
+  {
+    "feature": "merchant_category_education",
+    "mean_abs_shap": 0.0931
+  },
+  {
+    "feature": "merchant_category_utilities",
+    "mean_abs_shap": 0.07289
+  },
+  {
+    "feature": "merchant_category_food_delivery",
+    "mean_abs_shap": 0.069
+  },
+  {
+    "feature": "is_night",
+    "mean_abs_shap": 0.06058
+  },
+  {
+    "feature": "method_netbanking",
+    "mean_abs_shap": 0.05419
+  },
+  {
+    "feature": "merchant_category_gaming",
+    "mean_abs_shap": 0.05354
+  },
+  {
+    "feature": "method_upi",
+    "mean_abs_shap": 0.04872
+  },
+  {
+    "feature": "merchant_category_ecommerce",
+    "mean_abs_shap": 0.03675
+  },
+  {
+    "feature": "merchant_category_travel",
+    "mean_abs_shap": 0.03246
+  },
+  {
+    "feature": "method_wallet",
+    "mean_abs_shap": 0.03182
+  },
+  {
+    "feature": "method_emi",
+    "mean_abs_shap": 0.00813
+  }
+]

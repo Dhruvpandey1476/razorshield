@@ -1,0 +1,70 @@
+{
+  "n_transactions": 45102,
+  "n_merchants": 250,
+  "n_customers": 9000,
+  "windows": {
+    "train": "2026-08-01 to 2026-08-07",
+    "val": "2026-08-08 to 2026-08-09",
+    "test": "2026-08-10 to 2026-08-14"
+  },
+  "split_sizes": {
+    "train": 22213,
+    "test": 16345,
+    "val": 6544
+  },
+  "fraud_rate_by_split": {
+    "train": 0.0163,
+    "val": 0.0165,
+    "test": 0.0436
+  },
+  "generating_coefficients": {
+    "merchant_risk": 1.05,
+    "amount_z": 0.95,
+    "is_night": 1.3,
+    "mismatch": 1.55,
+    "new_customer": 0.8,
+    "device_velocity": 1.15,
+    "ip_velocity": 0.65,
+    "customer_velocity": 0.45
+  },
+  "label_noise_sd": 0.32,
+  "bayes_ceiling_auc_baseline_population": 0.9306,
+  "bayes_ceiling_note": "AUC achievable by an oracle that knows the exact generating signal but not the irreducible noise term. No model trained on the observed columns can exceed this on the baseline population. Injected ring events are excluded from this figure because they are labelled by construction rather than drawn from the logistic process.",
+  "injected_events": [
+    {
+      "id": "SPK-001",
+      "label": "card_testing",
+      "n_txns": 140,
+      "device_pool_frac": 0.05,
+      "visibility": "dense device pool -- individually VISIBLE to a per-txn model"
+    },
+    {
+      "id": "SPK-002",
+      "label": "synthetic_identity",
+      "n_txns": 95,
+      "device_pool_frac": 0.95,
+      "visibility": "distributed device pool -- individually INVISIBLE to a per-txn model"
+    },
+    {
+      "id": "SPK-003",
+      "label": "account_takeover",
+      "n_txns": 180,
+      "device_pool_frac": 0.85,
+      "visibility": "distributed pool, established accounts -- individually INVISIBLE"
+    },
+    {
+      "id": "SPK-004",
+      "label": "card_testing_small",
+      "n_txns": 70,
+      "device_pool_frac": 0.07,
+      "visibility": "dense device pool -- individually VISIBLE to a per-txn model"
+    },
+    {
+      "id": "CTRL-001",
+      "label": "legitimate_demand_spike",
+      "n_txns": 110,
+      "device_pool_frac": 0.95,
+      "visibility": "negative control -- must NOT be blocked"
+    }
+  ]
+}

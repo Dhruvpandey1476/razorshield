@@ -1,0 +1,54 @@
+[
+  {
+    "spike_id": "SPK-001",
+    "attack_type": "card_testing",
+    "start": "2026-08-10 09:00",
+    "n_txns": 140,
+    "n_merchants": 9,
+    "device_pool_fraction": 0.05,
+    "visibility_to_per_txn_model": "dense device pool -- individually VISIBLE to a per-txn model",
+    "standalone_recall": 0.064,
+    "combined_recall": 0.971,
+    "flagged_as_spike_bucket": true,
+    "detection_latency_minutes": 15.0
+  },
+  {
+    "spike_id": "SPK-002",
+    "attack_type": "synthetic_identity",
+    "start": "2026-08-11 22:15",
+    "n_txns": 95,
+    "n_merchants": 6,
+    "device_pool_fraction": 0.95,
+    "visibility_to_per_txn_model": "distributed device pool -- individually INVISIBLE to a per-txn model",
+    "standalone_recall": 0.011,
+    "combined_recall": 0.758,
+    "flagged_as_spike_bucket": true,
+    "detection_latency_minutes": 15.0
+  },
+  {
+    "spike_id": "SPK-003",
+    "attack_type": "account_takeover",
+    "start": "2026-08-12 14:40",
+    "n_txns": 180,
+    "n_merchants": 12,
+    "device_pool_fraction": 0.85,
+    "visibility_to_per_txn_model": "distributed pool, established accounts -- individually INVISIBLE",
+    "standalone_recall": 0.006,
+    "combined_recall": 0.072,
+    "flagged_as_spike_bucket": true,
+    "detection_latency_minutes": 5.0
+  },
+  {
+    "spike_id": "SPK-004",
+    "attack_type": "card_testing_small",
+    "start": "2026-08-13 03:10",
+    "n_txns": 70,
+    "n_merchants": 5,
+    "device_pool_fraction": 0.07,
+    "visibility_to_per_txn_model": "dense device pool -- individually VISIBLE to a per-txn model",
+    "standalone_recall": 0.1,
+    "combined_recall": 0.943,
+    "flagged_as_spike_bucket": true,
+    "detection_latency_minutes": 5.0
+  }
+]

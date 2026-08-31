@@ -1,0 +1,14 @@
+{
+  "id": "CTRL-001",
+  "start": "2026-08-12 18:00",
+  "duration_min": 40,
+  "n_txns": 110,
+  "n_merchants": 1,
+  "device_pool_frac": 0.95,
+  "ip_pool_frac": 0.92,
+  "new_cust_p": 0.25,
+  "mismatch_p": 0.05,
+  "amount_log_shift": 0.0,
+  "description": "Genuine legitimate demand spike (flash sale) -- NOT fraud. Specificity control: tests whether the system avoids blocking an innocent merchant having a good day.",
+  "merchant_id": "mch_0202"
+}

@@ -1,0 +1,9 @@
+{
+  "event_id": "CTRL-001",
+  "description": "Genuine legitimate demand spike (flash sale) -- NOT fraud. Specificity control: tests whether the system avoids blocking an innocent merchant having a good day.",
+  "n_txns": 110,
+  "temporal_layer_flagged_bucket_as_anomalous": true,
+  "individual_txn_flag_rate": 0.0,
+  "combined_txn_flag_rate": 0.0,
+  "note": "The temporal layer flags this bucket as a volume anomaly, which is correct -- it genuinely is one. Specificity therefore cannot come from the volume signal, and does not: it comes from the downstream investigation agent, which aggregates device/IP reuse, mismatch rate and model confidence before deciding. See audit_trail.jsonl for the agent's ALLOW/REVIEW/BLOCK verdict on this event."
+}

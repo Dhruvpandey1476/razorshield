@@ -1,0 +1,4471 @@
+{
+  "evaluation_window": "held-out temporal test window (2026-08-10 to 2026-08-14)",
+  "split_policy": {
+    "train": "2026-08-01 to 2026-08-07",
+    "validation": "2026-08-08 to 2026-08-09",
+    "test": "2026-08-10 to 2026-08-14",
+    "note": "Every threshold and operating point is selected on the validation window. The test window is scored once, after all choices are frozen."
+  },
+  "cost_assumptions": {
+    "manual_review_cost_inr_per_alert": 45.0,
+    "chargeback_fee_inr_per_missed_fraud": 750.0,
+    "missed_fraud_also_costs": "the full transaction value",
+    "alert_budget_fraction": 0.01
+  },
+  "n_test_transactions": 16345,
+  "n_test_fraud": 713,
+  "model_quality": {
+    "roc_auc_overall": 0.7889,
+    "roc_auc_baseline_fraud_population": 0.9018,
+    "roc_auc_coordinated_ring_population": 0.735,
+    "pr_auc_overall": 0.1898,
+    "bayes_ceiling_auc_baseline_population": 0.9306,
+    "interpretation": "Judge the classifier on the baseline-population AUC, read against the Bayes ceiling rather than against 1.0. The coordinated-ring AUC is much lower because two of the four injected rings distribute across near-unique devices, leaving no per-transaction velocity signal to learn. That gap is the measured case for the temporal layer. The blended figure mixes both populations and is reported for completeness."
+  },
+  "primary_operating_point": "budget_1pct (primary)",
+  "operating_points": [
+    {
+      "name": "budget_1pct (primary)",
+      "threshold": 0.9071,
+      "alert_rate": 0.0072,
+      "precision": 0.4153,
+      "recall": 0.0687,
+      "f1": 0.1179,
+      "false_positive_rate": 0.0044,
+      "confusion_matrix": {
+        "tn": 15563,
+        "fp": 69,
+        "fn": 664,
+        "tp": 49
+      },
+      "false_positive_monetary_cost_inr": 3105.0,
+      "fraud_amount_prevented_inr": 122970.73,
+      "fraud_amount_missed_inr": 1009028.37,
+      "cost_breakdown": {
+        "review_cost_inr": 3105.0,
+        "missed_fraud_value_inr": 1009028.37,
+        "chargeback_fees_inr": 498000.0,
+        "total_cost_inr": 1510133.37
+      },
+      "net_benefit_vs_no_model_inr": 156615.73
+    },
+    {
+      "name": "budget_2pct",
+      "threshold": 0.7986,
+      "alert_rate": 0.0199,
+      "precision": 0.3538,
+      "recall": 0.1613,
+      "f1": 0.2216,
+      "false_positive_rate": 0.0134,
+      "confusion_matrix": {
+        "tn": 15422,
+        "fp": 210,
+        "fn": 598,
+        "tp": 115
+      },
+      "false_positive_monetary_cost_inr": 9450.0,
+      "fraud_amount_prevented_inr": 261441.43,
+      "fraud_amount_missed_inr": 870557.67,
+      "cost_breakdown": {
+        "review_cost_inr": 9450.0,
+        "missed_fraud_value_inr": 870557.67,
+        "chargeback_fees_inr": 448500.0,
+        "total_cost_inr": 1328507.67
+      },
+      "net_benefit_vs_no_model_inr": 338241.43
+    },
+    {
+      "name": "budget_5pct",
+      "threshold": 0.5816,
+      "alert_rate": 0.046,
+      "precision": 0.2527,
+      "recall": 0.2665,
+      "f1": 0.2594,
+      "false_positive_rate": 0.036,
+      "confusion_matrix": {
+        "tn": 15070,
+        "fp": 562,
+        "fn": 523,
+        "tp": 190
+      },
+      "false_positive_monetary_cost_inr": 25290.0,
+      "fraud_amount_prevented_inr": 442344.82,
+      "fraud_amount_missed_inr": 689654.28,
+      "cost_breakdown": {
+        "review_cost_inr": 25290.0,
+        "missed_fraud_value_inr": 689654.28,
+        "chargeback_fees_inr": 392250.0,
+        "total_cost_inr": 1107194.28
+      },
+      "net_benefit_vs_no_model_inr": 559554.82
+    },
+    {
+      "name": "cost_optimal_unconstrained",
+      "threshold": 0.182,
+      "alert_rate": 0.127,
+      "precision": 0.1508,
+      "recall": 0.439,
+      "f1": 0.2245,
+      "false_positive_rate": 0.1127,
+      "confusion_matrix": {
+        "tn": 13870,
+        "fp": 1762,
+        "fn": 400,
+        "tp": 313
+      },
+      "false_positive_monetary_cost_inr": 79290.0,
+      "fraud_amount_prevented_inr": 684577.67,
+      "fraud_amount_missed_inr": 447421.43,
+      "cost_breakdown": {
+        "review_cost_inr": 79290.0,
+        "missed_fraud_value_inr": 447421.43,
+        "chargeback_fees_inr": 300000.0,
+        "total_cost_inr": 826711.43
+      },
+      "net_benefit_vs_no_model_inr": 840037.67,
+      "caveat": "Lowest expected rupee cost, but it alerts on 12.7% of all traffic. Reported for completeness -- no risk-ops team can staff this, which is precisely why the deployed operating point is budget-constrained."
+    },
+    {
+      "name": "f1_optimal",
+      "threshold": 0.8069,
+      "alert_rate": 0.0189,
+      "precision": 0.3592,
+      "recall": 0.1557,
+      "f1": 0.2172,
+      "false_positive_rate": 0.0127,
+      "confusion_matrix": {
+        "tn": 15434,
+        "fp": 198,
+        "fn": 602,
+        "tp": 111
+      },
+      "false_positive_monetary_cost_inr": 8910.0,
+      "fraud_amount_prevented_inr": 252703.71,
+      "fraud_amount_missed_inr": 879295.39,
+      "cost_breakdown": {
+        "review_cost_inr": 8910.0,
+        "missed_fraud_value_inr": 879295.39,
+        "chargeback_fees_inr": 451500.0,
+        "total_cost_inr": 1339705.39
+      },
+      "net_benefit_vs_no_model_inr": 327043.71,
+      "caveat": "What maximising F1 would pick. Shown to make the difference visible: F1 implicitly prices one missed fraud equal to one false alarm, which is wrong by roughly two orders of magnitude in payments."
+    }
+  ],
+  "validation_cost_curve": [
+    {
+      "threshold": 0.0001,
+      "total_cost_inr": 289620.0,
+      "alert_rate": 1.0
+    },
+    {
+      "threshold": 0.00013,
+      "total_cost_inr": 289125.0,
+      "alert_rate": 0.99832
+    },
+    {
+      "threshold": 0.00017,
+      "total_cost_inr": 288630.0,
+      "alert_rate": 0.99664
+    },
+    {
+      "threshold": 0.00019,
+      "total_cost_inr": 288135.0,
+      "alert_rate": 0.99496
+    },
+    {
+      "threshold": 0.0002,
+      "total_cost_inr": 287640.0,
+      "alert_rate": 0.99328
+    },
+    {
+      "threshold": 0.00021,
+      "total_cost_inr": 287145.0,
+      "alert_rate": 0.9916
+    },
+    {
+      "threshold": 0.00022,
+      "total_cost_inr": 286650.0,
+      "alert_rate": 0.98991
+    },
+    {
+      "threshold": 0.00024,
+      "total_cost_inr": 286155.0,
+      "alert_rate": 0.98823
+    },
+    {
+      "threshold": 0.00025,
+      "total_cost_inr": 285660.0,
+      "alert_rate": 0.98655
+    },
+    {
+      "threshold": 0.00026,
+      "total_cost_inr": 285165.0,
+      "alert_rate": 0.98487
+    },
+    {
+      "threshold": 0.00028,
+      "total_cost_inr": 284670.0,
+      "alert_rate": 0.98319
+    },
+    {
+      "threshold": 0.00029,
+      "total_cost_inr": 284175.0,
+      "alert_rate": 0.98151
+    },
+    {
+      "threshold": 0.0003,
+      "total_cost_inr": 283680.0,
+      "alert_rate": 0.97983
+    },
+    {
+      "threshold": 0.00032,
+      "total_cost_inr": 283230.0,
+      "alert_rate": 0.9783
+    },
+    {
+      "threshold": 0.00032,
+      "total_cost_inr": 282735.0,
+      "alert_rate": 0.97662
+    },
+    {
+      "threshold": 0.00034,
+      "total_cost_inr": 282240.0,
+      "alert_rate": 0.97494
+    },
+    {
+      "threshold": 0.00036,
+      "total_cost_inr": 281745.0,
+      "alert_rate": 0.97326
+    },
+    {
+      "threshold": 0.00037,
+      "total_cost_inr": 281250.0,
+      "alert_rate": 0.97158
+    },
+    {
+      "threshold": 0.00039,
+      "total_cost_inr": 280755.0,
+      "alert_rate": 0.9699
+    },
+    {
+      "threshold": 0.0004,
+      "total_cost_inr": 280260.0,
+      "alert_rate": 0.96822
+    },
+    {
+      "threshold": 0.00042,
+      "total_cost_inr": 279765.0,
+      "alert_rate": 0.96653
+    },
+    {
+      "threshold": 0.00044,
+      "total_cost_inr": 279270.0,
+      "alert_rate": 0.96485
+    },
+    {
+      "threshold": 0.00045,
+      "total_cost_inr": 278775.0,
+      "alert_rate": 0.96317
+    },
+    {
+      "threshold": 0.00047,
+      "total_cost_inr": 278280.0,
+      "alert_rate": 0.96149
+    },
+    {
+      "threshold": 0.00048,
+      "total_cost_inr": 277785.0,
+      "alert_rate": 0.95981
+    },
+    {
+      "threshold": 0.0005,
+      "total_cost_inr": 277290.0,
+      "alert_rate": 0.95813
+    },
+    {
+      "threshold": 0.00052,
+      "total_cost_inr": 276795.0,
+      "alert_rate": 0.95645
+    },
+    {
+      "threshold": 0.00053,
+      "total_cost_inr": 276345.0,
+      "alert_rate": 0.95492
+    },
+    {
+      "threshold": 0.00055,
+      "total_cost_inr": 275850.0,
+      "alert_rate": 0.95324
+    },
+    {
+      "threshold": 0.00057,
+      "total_cost_inr": 275355.0,
+      "alert_rate": 0.95156
+    },
+    {
+      "threshold": 0.00059,
+      "total_cost_inr": 274860.0,
+      "alert_rate": 0.94988
+    },
+    {
+      "threshold": 0.0006,
+      "total_cost_inr": 274365.0,
+      "alert_rate": 0.9482
+    },
+    {
+      "threshold": 0.00062,
+      "total_cost_inr": 273870.0,
+      "alert_rate": 0.94652
+    },
+    {
+      "threshold": 0.00064,
+      "total_cost_inr": 273375.0,
+      "alert_rate": 0.94483
+    },
+    {
+      "threshold": 0.00065,
+      "total_cost_inr": 272880.0,
+      "alert_rate": 0.94315
+    },
+    {
+      "threshold": 0.00066,
+      "total_cost_inr": 272385.0,
+      "alert_rate": 0.94147
+    },
+    {
+      "threshold": 0.00068,
+      "total_cost_inr": 271890.0,
+      "alert_rate": 0.93979
+    },
+    {
+      "threshold": 0.00069,
+      "total_cost_inr": 271395.0,
+      "alert_rate": 0.93811
+    },
+    {
+      "threshold": 0.0007,
+      "total_cost_inr": 270900.0,
+      "alert_rate": 0.93643
+    },
+    {
+      "threshold": 0.00071,
+      "total_cost_inr": 270405.0,
+      "alert_rate": 0.93475
+    },
+    {
+      "threshold": 0.00073,
+      "total_cost_inr": 269955.0,
+      "alert_rate": 0.93322
+    },
+    {
+      "threshold": 0.00075,
+      "total_cost_inr": 269460.0,
+      "alert_rate": 0.93154
+    },
+    {
+      "threshold": 0.00076,
+      "total_cost_inr": 268965.0,
+      "alert_rate": 0.92986
+    },
+    {
+      "threshold": 0.00077,
+      "total_cost_inr": 268470.0,
+      "alert_rate": 0.92818
+    },
+    {
+      "threshold": 0.00079,
+      "total_cost_inr": 267975.0,
+      "alert_rate": 0.9265
+    },
+    {
+      "threshold": 0.00081,
+      "total_cost_inr": 267480.0,
+      "alert_rate": 0.92482
+    },
+    {
+      "threshold": 0.00082,
+      "total_cost_inr": 266985.0,
+      "alert_rate": 0.92314
+    },
+    {
+      "threshold": 0.00084,
+      "total_cost_inr": 266490.0,
+      "alert_rate": 0.92145
+    },
+    {
+      "threshold": 0.00085,
+      "total_cost_inr": 265995.0,
+      "alert_rate": 0.91977
+    },
+    {
+      "threshold": 0.00086,
+      "total_cost_inr": 265500.0,
+      "alert_rate": 0.91809
+    },
+    {
+      "threshold": 0.00087,
+      "total_cost_inr": 265005.0,
+      "alert_rate": 0.91641
+    },
+    {
+      "threshold": 0.00088,
+      "total_cost_inr": 264510.0,
+      "alert_rate": 0.91473
+    },
+    {
+      "threshold": 0.00089,
+      "total_cost_inr": 264015.0,
+      "alert_rate": 0.91305
+    },
+    {
+      "threshold": 0.00091,
+      "total_cost_inr": 263565.0,
+      "alert_rate": 0.91152
+    },
+    {
+      "threshold": 0.00093,
+      "total_cost_inr": 263070.0,
+      "alert_rate": 0.90984
+    },
+    {
+      "threshold": 0.00094,
+      "total_cost_inr": 262575.0,
+      "alert_rate": 0.90816
+    },
+    {
+      "threshold": 0.00096,
+      "total_cost_inr": 262080.0,
+      "alert_rate": 0.90648
+    },
+    {
+      "threshold": 0.00097,
+      "total_cost_inr": 261585.0,
+      "alert_rate": 0.9048
+    },
+    {
+      "threshold": 0.00099,
+      "total_cost_inr": 261090.0,
+      "alert_rate": 0.90312
+    },
+    {
+      "threshold": 0.00101,
+      "total_cost_inr": 260595.0,
+      "alert_rate": 0.90144
+    },
+    {
+      "threshold": 0.00102,
+      "total_cost_inr": 260100.0,
+      "alert_rate": 0.89976
+    },
+    {
+      "threshold": 0.00104,
+      "total_cost_inr": 259605.0,
+      "alert_rate": 0.89807
+    },
+    {
+      "threshold": 0.00106,
+      "total_cost_inr": 259110.0,
+      "alert_rate": 0.89639
+    },
+    {
+      "threshold": 0.00108,
+      "total_cost_inr": 258615.0,
+      "alert_rate": 0.89471
+    },
+    {
+      "threshold": 0.0011,
+      "total_cost_inr": 258120.0,
+      "alert_rate": 0.89303
+    },
+    {
+      "threshold": 0.00112,
+      "total_cost_inr": 257625.0,
+      "alert_rate": 0.89135
+    },
+    {
+      "threshold": 0.00114,
+      "total_cost_inr": 257175.0,
+      "alert_rate": 0.88982
+    },
+    {
+      "threshold": 0.00116,
+      "total_cost_inr": 256680.0,
+      "alert_rate": 0.88814
+    },
+    {
+      "threshold": 0.00118,
+      "total_cost_inr": 256185.0,
+      "alert_rate": 0.88646
+    },
+    {
+      "threshold": 0.00119,
+      "total_cost_inr": 255690.0,
+      "alert_rate": 0.88478
+    },
+    {
+      "threshold": 0.00121,
+      "total_cost_inr": 255195.0,
+      "alert_rate": 0.8831
+    },
+    {
+      "threshold": 0.00123,
+      "total_cost_inr": 254700.0,
+      "alert_rate": 0.88142
+    },
+    {
+      "threshold": 0.00124,
+      "total_cost_inr": 254205.0,
+      "alert_rate": 0.87974
+    },
+    {
+      "threshold": 0.00125,
+      "total_cost_inr": 253710.0,
+      "alert_rate": 0.87806
+    },
+    {
+      "threshold": 0.00126,
+      "total_cost_inr": 253215.0,
+      "alert_rate": 0.87638
+    },
+    {
+      "threshold": 0.00128,
+      "total_cost_inr": 252720.0,
+      "alert_rate": 0.87469
+    },
+    {
+      "threshold": 0.00129,
+      "total_cost_inr": 252225.0,
+      "alert_rate": 0.87301
+    },
+    {
+      "threshold": 0.00131,
+      "total_cost_inr": 251730.0,
+      "alert_rate": 0.87133
+    },
+    {
+      "threshold": 0.00132,
+      "total_cost_inr": 251235.0,
+      "alert_rate": 0.86965
+    },
+    {
+      "threshold": 0.00133,
+      "total_cost_inr": 250785.0,
+      "alert_rate": 0.86812
+    },
+    {
+      "threshold": 0.00134,
+      "total_cost_inr": 250290.0,
+      "alert_rate": 0.86644
+    },
+    {
+      "threshold": 0.00137,
+      "total_cost_inr": 249795.0,
+      "alert_rate": 0.86476
+    },
+    {
+      "threshold": 0.00138,
+      "total_cost_inr": 249300.0,
+      "alert_rate": 0.86308
+    },
+    {
+      "threshold": 0.0014,
+      "total_cost_inr": 248805.0,
+      "alert_rate": 0.8614
+    },
+    {
+      "threshold": 0.00141,
+      "total_cost_inr": 248310.0,
+      "alert_rate": 0.85972
+    },
+    {
+      "threshold": 0.00143,
+      "total_cost_inr": 247815.0,
+      "alert_rate": 0.85804
+    },
+    {
+      "threshold": 0.00145,
+      "total_cost_inr": 247320.0,
+      "alert_rate": 0.85636
+    },
+    {
+      "threshold": 0.00147,
+      "total_cost_inr": 246825.0,
+      "alert_rate": 0.85468
+    },
+    {
+      "threshold": 0.00148,
+      "total_cost_inr": 246330.0,
+      "alert_rate": 0.853
+    },
+    {
+      "threshold": 0.0015,
+      "total_cost_inr": 245835.0,
+      "alert_rate": 0.85131
+    },
+    {
+      "threshold": 0.00151,
+      "total_cost_inr": 245340.0,
+      "alert_rate": 0.84963
+    },
+    {
+      "threshold": 0.00152,
+      "total_cost_inr": 244845.0,
+      "alert_rate": 0.84795
+    },
+    {
+      "threshold": 0.00154,
+      "total_cost_inr": 244395.0,
+      "alert_rate": 0.84642
+    },
+    {
+      "threshold": 0.00155,
+      "total_cost_inr": 243900.0,
+      "alert_rate": 0.84474
+    },
+    {
+      "threshold": 0.00157,
+      "total_cost_inr": 243405.0,
+      "alert_rate": 0.84306
+    },
+    {
+      "threshold": 0.00159,
+      "total_cost_inr": 242910.0,
+      "alert_rate": 0.84138
+    },
+    {
+      "threshold": 0.0016,
+      "total_cost_inr": 242415.0,
+      "alert_rate": 0.8397
+    },
+    {
+      "threshold": 0.00163,
+      "total_cost_inr": 241920.0,
+      "alert_rate": 0.83802
+    },
+    {
+      "threshold": 0.00164,
+      "total_cost_inr": 241425.0,
+      "alert_rate": 0.83634
+    },
+    {
+      "threshold": 0.00166,
+      "total_cost_inr": 240930.0,
+      "alert_rate": 0.83466
+    },
+    {
+      "threshold": 0.00167,
+      "total_cost_inr": 240435.0,
+      "alert_rate": 0.83298
+    },
+    {
+      "threshold": 0.00169,
+      "total_cost_inr": 239940.0,
+      "alert_rate": 0.8313
+    },
+    {
+      "threshold": 0.0017,
+      "total_cost_inr": 239445.0,
+      "alert_rate": 0.82961
+    },
+    {
+      "threshold": 0.00171,
+      "total_cost_inr": 238950.0,
+      "alert_rate": 0.82793
+    },
+    {
+      "threshold": 0.00173,
+      "total_cost_inr": 238455.0,
+      "alert_rate": 0.82625
+    },
+    {
+      "threshold": 0.00174,
+      "total_cost_inr": 238005.0,
+      "alert_rate": 0.82472
+    },
+    {
+      "threshold": 0.00176,
+      "total_cost_inr": 237510.0,
+      "alert_rate": 0.82304
+    },
+    {
+      "threshold": 0.00178,
+      "total_cost_inr": 237015.0,
+      "alert_rate": 0.82136
+    },
+    {
+      "threshold": 0.00181,
+      "total_cost_inr": 236520.0,
+      "alert_rate": 0.81968
+    },
+    {
+      "threshold": 0.00182,
+      "total_cost_inr": 236025.0,
+      "alert_rate": 0.818
+    },
+    {
+      "threshold": 0.00183,
+      "total_cost_inr": 235530.0,
+      "alert_rate": 0.81632
+    },
+    {
+      "threshold": 0.00185,
+      "total_cost_inr": 235035.0,
+      "alert_rate": 0.81464
+    },
+    {
+      "threshold": 0.00187,
+      "total_cost_inr": 234540.0,
+      "alert_rate": 0.81296
+    },
+    {
+      "threshold": 0.00189,
+      "total_cost_inr": 234045.0,
+      "alert_rate": 0.81128
+    },
+    {
+      "threshold": 0.0019,
+      "total_cost_inr": 233550.0,
+      "alert_rate": 0.8096
+    },
+    {
+      "threshold": 0.00193,
+      "total_cost_inr": 233055.0,
+      "alert_rate": 0.80792
+    },
+    {
+      "threshold": 0.00194,
+      "total_cost_inr": 232560.0,
+      "alert_rate": 0.80623
+    },
+    {
+      "threshold": 0.00197,
+      "total_cost_inr": 232065.0,
+      "alert_rate": 0.80455
+    },
+    {
+      "threshold": 0.00199,
+      "total_cost_inr": 231615.0,
+      "alert_rate": 0.80303
+    },
+    {
+      "threshold": 0.00201,
+      "total_cost_inr": 231120.0,
+      "alert_rate": 0.80134
+    },
+    {
+      "threshold": 0.00203,
+      "total_cost_inr": 230625.0,
+      "alert_rate": 0.79966
+    },
+    {
+      "threshold": 0.00205,
+      "total_cost_inr": 230130.0,
+      "alert_rate": 0.79798
+    },
+    {
+      "threshold": 0.00207,
+      "total_cost_inr": 229635.0,
+      "alert_rate": 0.7963
+    },
+    {
+      "threshold": 0.00209,
+      "total_cost_inr": 229140.0,
+      "alert_rate": 0.79462
+    },
+    {
+      "threshold": 0.00212,
+      "total_cost_inr": 228645.0,
+      "alert_rate": 0.79294
+    },
+    {
+      "threshold": 0.00214,
+      "total_cost_inr": 228150.0,
+      "alert_rate": 0.79126
+    },
+    {
+      "threshold": 0.00217,
+      "total_cost_inr": 227655.0,
+      "alert_rate": 0.78958
+    },
+    {
+      "threshold": 0.0022,
+      "total_cost_inr": 227160.0,
+      "alert_rate": 0.7879
+    },
+    {
+      "threshold": 0.00221,
+      "total_cost_inr": 226665.0,
+      "alert_rate": 0.78622
+    },
+    {
+      "threshold": 0.00223,
+      "total_cost_inr": 226170.0,
+      "alert_rate": 0.78454
+    },
+    {
+      "threshold": 0.00224,
+      "total_cost_inr": 225675.0,
+      "alert_rate": 0.78285
+    },
+    {
+      "threshold": 0.00226,
+      "total_cost_inr": 225225.0,
+      "alert_rate": 0.78133
+    },
+    {
+      "threshold": 0.00229,
+      "total_cost_inr": 224730.0,
+      "alert_rate": 0.77965
+    },
+    {
+      "threshold": 0.00231,
+      "total_cost_inr": 224235.0,
+      "alert_rate": 0.77796
+    },
+    {
+      "threshold": 0.00232,
+      "total_cost_inr": 223740.0,
+      "alert_rate": 0.77628
+    },
+    {
+      "threshold": 0.00234,
+      "total_cost_inr": 223245.0,
+      "alert_rate": 0.7746
+    },
+    {
+      "threshold": 0.00237,
+      "total_cost_inr": 222750.0,
+      "alert_rate": 0.77292
+    },
+    {
+      "threshold": 0.00239,
+      "total_cost_inr": 222255.0,
+      "alert_rate": 0.77124
+    },
+    {
+      "threshold": 0.00241,
+      "total_cost_inr": 221760.0,
+      "alert_rate": 0.76956
+    },
+    {
+      "threshold": 0.00243,
+      "total_cost_inr": 221265.0,
+      "alert_rate": 0.76788
+    },
+    {
+      "threshold": 0.00246,
+      "total_cost_inr": 220770.0,
+      "alert_rate": 0.7662
+    },
+    {
+      "threshold": 0.00248,
+      "total_cost_inr": 220275.0,
+      "alert_rate": 0.76452
+    },
+    {
+      "threshold": 0.00251,
+      "total_cost_inr": 219780.0,
+      "alert_rate": 0.76284
+    },
+    {
+      "threshold": 0.00253,
+      "total_cost_inr": 219285.0,
+      "alert_rate": 0.76116
+    },
+    {
+      "threshold": 0.00255,
+      "total_cost_inr": 218835.0,
+      "alert_rate": 0.75963
+    },
+    {
+      "threshold": 0.00256,
+      "total_cost_inr": 218340.0,
+      "alert_rate": 0.75795
+    },
+    {
+      "threshold": 0.00258,
+      "total_cost_inr": 217845.0,
+      "alert_rate": 0.75627
+    },
+    {
+      "threshold": 0.0026,
+      "total_cost_inr": 217350.0,
+      "alert_rate": 0.75458
+    },
+    {
+      "threshold": 0.00262,
+      "total_cost_inr": 216855.0,
+      "alert_rate": 0.7529
+    },
+    {
+      "threshold": 0.00265,
+      "total_cost_inr": 216360.0,
+      "alert_rate": 0.75122
+    },
+    {
+      "threshold": 0.00267,
+      "total_cost_inr": 215865.0,
+      "alert_rate": 0.74954
+    },
+    {
+      "threshold": 0.00269,
+      "total_cost_inr": 215370.0,
+      "alert_rate": 0.74786
+    },
+    {
+      "threshold": 0.0027,
+      "total_cost_inr": 214875.0,
+      "alert_rate": 0.74618
+    },
+    {
+      "threshold": 0.00273,
+      "total_cost_inr": 214380.0,
+      "alert_rate": 0.7445
+    },
+    {
+      "threshold": 0.00274,
+      "total_cost_inr": 213885.0,
+      "alert_rate": 0.74282
+    },
+    {
+      "threshold": 0.00275,
+      "total_cost_inr": 213390.0,
+      "alert_rate": 0.74114
+    },
+    {
+      "threshold": 0.00277,
+      "total_cost_inr": 212895.0,
+      "alert_rate": 0.73946
+    },
+    {
+      "threshold": 0.0028,
+      "total_cost_inr": 212445.0,
+      "alert_rate": 0.73793
+    },
+    {
+      "threshold": 0.00281,
+      "total_cost_inr": 211950.0,
+      "alert_rate": 0.73625
+    },
+    {
+      "threshold": 0.00283,
+      "total_cost_inr": 211455.0,
+      "alert_rate": 0.73457
+    },
+    {
+      "threshold": 0.00287,
+      "total_cost_inr": 210960.0,
+      "alert_rate": 0.73289
+    },
+    {
+      "threshold": 0.00288,
+      "total_cost_inr": 210465.0,
+      "alert_rate": 0.7312
+    },
+    {
+      "threshold": 0.0029,
+      "total_cost_inr": 209970.0,
+      "alert_rate": 0.72952
+    },
+    {
+      "threshold": 0.00292,
+      "total_cost_inr": 209475.0,
+      "alert_rate": 0.72784
+    },
+    {
+      "threshold": 0.00295,
+      "total_cost_inr": 208980.0,
+      "alert_rate": 0.72616
+    },
+    {
+      "threshold": 0.00296,
+      "total_cost_inr": 208485.0,
+      "alert_rate": 0.72448
+    },
+    {
+      "threshold": 0.00299,
+      "total_cost_inr": 207990.0,
+      "alert_rate": 0.7228
+    },
+    {
+      "threshold": 0.00302,
+      "total_cost_inr": 207495.0,
+      "alert_rate": 0.72112
+    },
+    {
+      "threshold": 0.00307,
+      "total_cost_inr": 207000.0,
+      "alert_rate": 0.71944
+    },
+    {
+      "threshold": 0.00308,
+      "total_cost_inr": 206505.0,
+      "alert_rate": 0.71776
+    },
+    {
+      "threshold": 0.00312,
+      "total_cost_inr": 206055.0,
+      "alert_rate": 0.71623
+    },
+    {
+      "threshold": 0.00314,
+      "total_cost_inr": 205560.0,
+      "alert_rate": 0.71455
+    },
+    {
+      "threshold": 0.00317,
+      "total_cost_inr": 205065.0,
+      "alert_rate": 0.71287
+    },
+    {
+      "threshold": 0.00319,
+      "total_cost_inr": 204570.0,
+      "alert_rate": 0.71119
+    },
+    {
+      "threshold": 0.00321,
+      "total_cost_inr": 204075.0,
+      "alert_rate": 0.7095
+    },
+    {
+      "threshold": 0.00324,
+      "total_cost_inr": 203580.0,
+      "alert_rate": 0.70782
+    },
+    {
+      "threshold": 0.00326,
+      "total_cost_inr": 203085.0,
+      "alert_rate": 0.70614
+    },
+    {
+      "threshold": 0.00328,
+      "total_cost_inr": 202590.0,
+      "alert_rate": 0.70446
+    },
+    {
+      "threshold": 0.00331,
+      "total_cost_inr": 202095.0,
+      "alert_rate": 0.70278
+    },
+    {
+      "threshold": 0.00334,
+      "total_cost_inr": 201600.0,
+      "alert_rate": 0.7011
+    },
+    {
+      "threshold": 0.00337,
+      "total_cost_inr": 201105.0,
+      "alert_rate": 0.69942
+    },
+    {
+      "threshold": 0.0034,
+      "total_cost_inr": 200610.0,
+      "alert_rate": 0.69774
+    },
+    {
+      "threshold": 0.00341,
+      "total_cost_inr": 200115.0,
+      "alert_rate": 0.69606
+    },
+    {
+      "threshold": 0.00347,
+      "total_cost_inr": 199665.0,
+      "alert_rate": 0.69453
+    },
+    {
+      "threshold": 0.00349,
+      "total_cost_inr": 199170.0,
+      "alert_rate": 0.69285
+    },
+    {
+      "threshold": 0.00353,
+      "total_cost_inr": 198675.0,
+      "alert_rate": 0.69117
+    },
+    {
+      "threshold": 0.00355,
+      "total_cost_inr": 198180.0,
+      "alert_rate": 0.68949
+    },
+    {
+      "threshold": 0.00359,
+      "total_cost_inr": 197685.0,
+      "alert_rate": 0.68781
+    },
+    {
+      "threshold": 0.00364,
+      "total_cost_inr": 197190.0,
+      "alert_rate": 0.68612
+    },
+    {
+      "threshold": 0.00367,
+      "total_cost_inr": 196695.0,
+      "alert_rate": 0.68444
+    },
+    {
+      "threshold": 0.0037,
+      "total_cost_inr": 196200.0,
+      "alert_rate": 0.68276
+    },
+    {
+      "threshold": 0.00373,
+      "total_cost_inr": 195705.0,
+      "alert_rate": 0.68108
+    },
+    {
+      "threshold": 0.00376,
+      "total_cost_inr": 195210.0,
+      "alert_rate": 0.6794
+    },
+    {
+      "threshold": 0.00379,
+      "total_cost_inr": 194715.0,
+      "alert_rate": 0.67772
+    },
+    {
+      "threshold": 0.00382,
+      "total_cost_inr": 194220.0,
+      "alert_rate": 0.67604
+    },
+    {
+      "threshold": 0.00386,
+      "total_cost_inr": 193725.0,
+      "alert_rate": 0.67436
+    },
+    {
+      "threshold": 0.0039,
+      "total_cost_inr": 193275.0,
+      "alert_rate": 0.67283
+    },
+    {
+      "threshold": 0.00395,
+      "total_cost_inr": 192780.0,
+      "alert_rate": 0.67115
+    },
+    {
+      "threshold": 0.00399,
+      "total_cost_inr": 192285.0,
+      "alert_rate": 0.66947
+    },
+    {
+      "threshold": 0.00402,
+      "total_cost_inr": 191790.0,
+      "alert_rate": 0.66779
+    },
+    {
+      "threshold": 0.00405,
+      "total_cost_inr": 191295.0,
+      "alert_rate": 0.66611
+    },
+    {
+      "threshold": 0.00408,
+      "total_cost_inr": 190800.0,
+      "alert_rate": 0.66443
+    },
+    {
+      "threshold": 0.00411,
+      "total_cost_inr": 190305.0,
+      "alert_rate": 0.66274
+    },
+    {
+      "threshold": 0.00413,
+      "total_cost_inr": 189810.0,
+      "alert_rate": 0.66106
+    },
+    {
+      "threshold": 0.00418,
+      "total_cost_inr": 189315.0,
+      "alert_rate": 0.65938
+    },
+    {
+      "threshold": 0.00423,
+      "total_cost_inr": 188820.0,
+      "alert_rate": 0.6577
+    },
+    {
+      "threshold": 0.00429,
+      "total_cost_inr": 188325.0,
+      "alert_rate": 0.65602
+    },
+    {
+      "threshold": 0.00432,
+      "total_cost_inr": 187830.0,
+      "alert_rate": 0.65434
+    },
+    {
+      "threshold": 0.00435,
+      "total_cost_inr": 187335.0,
+      "alert_rate": 0.65266
+    },
+    {
+      "threshold": 0.00437,
+      "total_cost_inr": 186885.0,
+      "alert_rate": 0.65113
+    },
+    {
+      "threshold": 0.0044,
+      "total_cost_inr": 186390.0,
+      "alert_rate": 0.64945
+    },
+    {
+      "threshold": 0.00445,
+      "total_cost_inr": 185895.0,
+      "alert_rate": 0.64777
+    },
+    {
+      "threshold": 0.00448,
+      "total_cost_inr": 185400.0,
+      "alert_rate": 0.64609
+    },
+    {
+      "threshold": 0.0045,
+      "total_cost_inr": 184905.0,
+      "alert_rate": 0.64441
+    },
+    {
+      "threshold": 0.00455,
+      "total_cost_inr": 184410.0,
+      "alert_rate": 0.64273
+    },
+    {
+      "threshold": 0.0046,
+      "total_cost_inr": 183915.0,
+      "alert_rate": 0.64105
+    },
+    {
+      "threshold": 0.00464,
+      "total_cost_inr": 183420.0,
+      "alert_rate": 0.63936
+    },
+    {
+      "threshold": 0.00469,
+      "total_cost_inr": 182925.0,
+      "alert_rate": 0.63768
+    },
+    {
+      "threshold": 0.00474,
+      "total_cost_inr": 182430.0,
+      "alert_rate": 0.636
+    },
+    {
+      "threshold": 0.00479,
+      "total_cost_inr": 181935.0,
+      "alert_rate": 0.63432
+    },
+    {
+      "threshold": 0.00483,
+      "total_cost_inr": 181440.0,
+      "alert_rate": 0.63264
+    },
+    {
+      "threshold": 0.00488,
+      "total_cost_inr": 180945.0,
+      "alert_rate": 0.63096
+    },
+    {
+      "threshold": 0.00492,
+      "total_cost_inr": 180495.0,
+      "alert_rate": 0.62943
+    },
+    {
+      "threshold": 0.00495,
+      "total_cost_inr": 180000.0,
+      "alert_rate": 0.62775
+    },
+    {
+      "threshold": 0.00499,
+      "total_cost_inr": 179505.0,
+      "alert_rate": 0.62607
+    },
+    {
+      "threshold": 0.00503,
+      "total_cost_inr": 179010.0,
+      "alert_rate": 0.62439
+    },
+    {
+      "threshold": 0.00506,
+      "total_cost_inr": 178515.0,
+      "alert_rate": 0.62271
+    },
+    {
+      "threshold": 0.00511,
+      "total_cost_inr": 178020.0,
+      "alert_rate": 0.62103
+    },
+    {
+      "threshold": 0.00514,
+      "total_cost_inr": 177525.0,
+      "alert_rate": 0.61935
+    },
+    {
+      "threshold": 0.00518,
+      "total_cost_inr": 177030.0,
+      "alert_rate": 0.61767
+    },
+    {
+      "threshold": 0.00522,
+      "total_cost_inr": 176535.0,
+      "alert_rate": 0.61598
+    },
+    {
+      "threshold": 0.00528,
+      "total_cost_inr": 177346.03,
+      "alert_rate": 0.6143
+    },
+    {
+      "threshold": 0.00533,
+      "total_cost_inr": 176851.03,
+      "alert_rate": 0.61262
+    },
+    {
+      "threshold": 0.00536,
+      "total_cost_inr": 176356.03,
+      "alert_rate": 0.61094
+    },
+    {
+      "threshold": 0.00541,
+      "total_cost_inr": 193320.47,
+      "alert_rate": 0.60926
+    },
+    {
+      "threshold": 0.00545,
+      "total_cost_inr": 192870.47,
+      "alert_rate": 0.60773
+    },
+    {
+      "threshold": 0.00548,
+      "total_cost_inr": 192375.47,
+      "alert_rate": 0.60605
+    },
+    {
+      "threshold": 0.00552,
+      "total_cost_inr": 191880.47,
+      "alert_rate": 0.60437
+    },
+    {
+      "threshold": 0.00557,
+      "total_cost_inr": 191385.47,
+      "alert_rate": 0.60269
+    },
+    {
+      "threshold": 0.00561,
+      "total_cost_inr": 190890.47,
+      "alert_rate": 0.60101
+    },
+    {
+      "threshold": 0.00564,
+      "total_cost_inr": 190395.47,
+      "alert_rate": 0.59933
+    },
+    {
+      "threshold": 0.00568,
+      "total_cost_inr": 189900.47,
+      "alert_rate": 0.59765
+    },
+    {
+      "threshold": 0.00574,
+      "total_cost_inr": 189405.47,
+      "alert_rate": 0.59597
+    },
+    {
+      "threshold": 0.00579,
+      "total_cost_inr": 188910.47,
+      "alert_rate": 0.59428
+    },
+    {
+      "threshold": 0.00583,
+      "total_cost_inr": 188415.47,
+      "alert_rate": 0.5926
+    },
+    {
+      "threshold": 0.00588,
+      "total_cost_inr": 187920.47,
+      "alert_rate": 0.59092
+    },
+    {
+      "threshold": 0.00592,
+      "total_cost_inr": 187425.47,
+      "alert_rate": 0.58924
+    },
+    {
+      "threshold": 0.00599,
+      "total_cost_inr": 186930.47,
+      "alert_rate": 0.58756
+    },
+    {
+      "threshold": 0.00603,
+      "total_cost_inr": 186480.47,
+      "alert_rate": 0.58603
+    },
+    {
+      "threshold": 0.00611,
+      "total_cost_inr": 185985.47,
+      "alert_rate": 0.58435
+    },
+    {
+      "threshold": 0.00617,
+      "total_cost_inr": 185490.47,
+      "alert_rate": 0.58267
+    },
+    {
+      "threshold": 0.00622,
+      "total_cost_inr": 184995.47,
+      "alert_rate": 0.58099
+    },
+    {
+      "threshold": 0.00629,
+      "total_cost_inr": 184500.47,
+      "alert_rate": 0.57931
+    },
+    {
+      "threshold": 0.00636,
+      "total_cost_inr": 184005.47,
+      "alert_rate": 0.57763
+    },
+    {
+      "threshold": 0.0064,
+      "total_cost_inr": 183510.47,
+      "alert_rate": 0.57595
+    },
+    {
+      "threshold": 0.00647,
+      "total_cost_inr": 183015.47,
+      "alert_rate": 0.57427
+    },
+    {
+      "threshold": 0.00652,
+      "total_cost_inr": 182520.47,
+      "alert_rate": 0.57259
+    },
+    {
+      "threshold": 0.00656,
+      "total_cost_inr": 182025.47,
+      "alert_rate": 0.5709
+    },
+    {
+      "threshold": 0.00661,
+      "total_cost_inr": 181530.47,
+      "alert_rate": 0.56922
+    },
+    {
+      "threshold": 0.00665,
+      "total_cost_inr": 181035.47,
+      "alert_rate": 0.56754
+    },
+    {
+      "threshold": 0.00669,
+      "total_cost_inr": 180540.47,
+      "alert_rate": 0.56586
+    },
+    {
+      "threshold": 0.00673,
+      "total_cost_inr": 180090.47,
+      "alert_rate": 0.56433
+    },
+    {
+      "threshold": 0.00678,
+      "total_cost_inr": 179595.47,
+      "alert_rate": 0.56265
+    },
+    {
+      "threshold": 0.00685,
+      "total_cost_inr": 179100.47,
+      "alert_rate": 0.56097
+    },
+    {
+      "threshold": 0.00689,
+      "total_cost_inr": 178605.47,
+      "alert_rate": 0.55929
+    },
+    {
+      "threshold": 0.00694,
+      "total_cost_inr": 178110.47,
+      "alert_rate": 0.55761
+    },
+    {
+      "threshold": 0.007,
+      "total_cost_inr": 177615.47,
+      "alert_rate": 0.55593
+    },
+    {
+      "threshold": 0.00708,
+      "total_cost_inr": 177120.47,
+      "alert_rate": 0.55425
+    },
+    {
+      "threshold": 0.00716,
+      "total_cost_inr": 176625.47,
+      "alert_rate": 0.55257
+    },
+    {
+      "threshold": 0.00721,
+      "total_cost_inr": 176130.47,
+      "alert_rate": 0.55089
+    },
+    {
+      "threshold": 0.00726,
+      "total_cost_inr": 175635.47,
+      "alert_rate": 0.54921
+    },
+    {
+      "threshold": 0.00732,
+      "total_cost_inr": 175140.47,
+      "alert_rate": 0.54752
+    },
+    {
+      "threshold": 0.00738,
+      "total_cost_inr": 174645.47,
+      "alert_rate": 0.54584
+    },
+    {
+      "threshold": 0.00742,
+      "total_cost_inr": 174150.47,
+      "alert_rate": 0.54416
+    },
+    {
+      "threshold": 0.00748,
+      "total_cost_inr": 173700.47,
+      "alert_rate": 0.54263
+    },
+    {
+      "threshold": 0.00753,
+      "total_cost_inr": 173205.47,
+      "alert_rate": 0.54095
+    },
+    {
+      "threshold": 0.00765,
+      "total_cost_inr": 172710.47,
+      "alert_rate": 0.53927
+    },
+    {
+      "threshold": 0.00771,
+      "total_cost_inr": 172215.47,
+      "alert_rate": 0.53759
+    },
+    {
+      "threshold": 0.00777,
+      "total_cost_inr": 171720.47,
+      "alert_rate": 0.53591
+    },
+    {
+      "threshold": 0.00784,
+      "total_cost_inr": 171225.47,
+      "alert_rate": 0.53423
+    },
+    {
+      "threshold": 0.00792,
+      "total_cost_inr": 170730.47,
+      "alert_rate": 0.53255
+    },
+    {
+      "threshold": 0.00797,
+      "total_cost_inr": 170235.47,
+      "alert_rate": 0.53087
+    },
+    {
+      "threshold": 0.00803,
+      "total_cost_inr": 169740.47,
+      "alert_rate": 0.52919
+    },
+    {
+      "threshold": 0.00808,
+      "total_cost_inr": 169245.47,
+      "alert_rate": 0.52751
+    },
+    {
+      "threshold": 0.00813,
+      "total_cost_inr": 168750.47,
+      "alert_rate": 0.52583
+    },
+    {
+      "threshold": 0.00819,
+      "total_cost_inr": 168255.47,
+      "alert_rate": 0.52414
+    },
+    {
+      "threshold": 0.00823,
+      "total_cost_inr": 167760.47,
+      "alert_rate": 0.52246
+    },
+    {
+      "threshold": 0.0083,
+      "total_cost_inr": 167310.47,
+      "alert_rate": 0.52094
+    },
+    {
+      "threshold": 0.00835,
+      "total_cost_inr": 166815.47,
+      "alert_rate": 0.51925
+    },
+    {
+      "threshold": 0.00845,
+      "total_cost_inr": 166320.47,
+      "alert_rate": 0.51757
+    },
+    {
+      "threshold": 0.00856,
+      "total_cost_inr": 165825.47,
+      "alert_rate": 0.51589
+    },
+    {
+      "threshold": 0.00862,
+      "total_cost_inr": 165330.47,
+      "alert_rate": 0.51421
+    },
+    {
+      "threshold": 0.0087,
+      "total_cost_inr": 164835.47,
+      "alert_rate": 0.51253
+    },
+    {
+      "threshold": 0.00875,
+      "total_cost_inr": 164340.47,
+      "alert_rate": 0.51085
+    },
+    {
+      "threshold": 0.00881,
+      "total_cost_inr": 163845.47,
+      "alert_rate": 0.50917
+    },
+    {
+      "threshold": 0.00889,
+      "total_cost_inr": 163350.47,
+      "alert_rate": 0.50749
+    },
+    {
+      "threshold": 0.00896,
+      "total_cost_inr": 162855.47,
+      "alert_rate": 0.50581
+    },
+    {
+      "threshold": 0.00905,
+      "total_cost_inr": 162360.47,
+      "alert_rate": 0.50413
+    },
+    {
+      "threshold": 0.00916,
+      "total_cost_inr": 161865.47,
+      "alert_rate": 0.50244
+    },
+    {
+      "threshold": 0.00926,
+      "total_cost_inr": 161370.47,
+      "alert_rate": 0.50076
+    },
+    {
+      "threshold": 0.00936,
+      "total_cost_inr": 162244.05,
+      "alert_rate": 0.49924
+    },
+    {
+      "threshold": 0.00945,
+      "total_cost_inr": 161749.05,
+      "alert_rate": 0.49756
+    },
+    {
+      "threshold": 0.00951,
+      "total_cost_inr": 161254.05,
+      "alert_rate": 0.49587
+    },
+    {
+      "threshold": 0.00961,
+      "total_cost_inr": 160759.05,
+      "alert_rate": 0.49419
+    },
+    {
+      "threshold": 0.00968,
+      "total_cost_inr": 160264.05,
+      "alert_rate": 0.49251
+    },
+    {
+      "threshold": 0.0098,
+      "total_cost_inr": 159769.05,
+      "alert_rate": 0.49083
+    },
+    {
+      "threshold": 0.00986,
+      "total_cost_inr": 159274.05,
+      "alert_rate": 0.48915
+    },
+    {
+      "threshold": 0.00994,
+      "total_cost_inr": 158779.05,
+      "alert_rate": 0.48747
+    },
+    {
+      "threshold": 0.01004,
+      "total_cost_inr": 158284.05,
+      "alert_rate": 0.48579
+    },
+    {
+      "threshold": 0.01008,
+      "total_cost_inr": 157789.05,
+      "alert_rate": 0.48411
+    },
+    {
+      "threshold": 0.01018,
+      "total_cost_inr": 158220.14,
+      "alert_rate": 0.48243
+    },
+    {
+      "threshold": 0.01025,
+      "total_cost_inr": 157725.14,
+      "alert_rate": 0.48075
+    },
+    {
+      "threshold": 0.01038,
+      "total_cost_inr": 157230.14,
+      "alert_rate": 0.47906
+    },
+    {
+      "threshold": 0.01043,
+      "total_cost_inr": 156780.14,
+      "alert_rate": 0.47754
+    },
+    {
+      "threshold": 0.01049,
+      "total_cost_inr": 156285.14,
+      "alert_rate": 0.47586
+    },
+    {
+      "threshold": 0.01064,
+      "total_cost_inr": 155790.14,
+      "alert_rate": 0.47417
+    },
+    {
+      "threshold": 0.01071,
+      "total_cost_inr": 155295.14,
+      "alert_rate": 0.47249
+    },
+    {
+      "threshold": 0.01079,
+      "total_cost_inr": 154800.14,
+      "alert_rate": 0.47081
+    },
+    {
+      "threshold": 0.0109,
+      "total_cost_inr": 154305.14,
+      "alert_rate": 0.46913
+    },
+    {
+      "threshold": 0.01104,
+      "total_cost_inr": 153810.14,
+      "alert_rate": 0.46745
+    },
+    {
+      "threshold": 0.01113,
+      "total_cost_inr": 153315.14,
+      "alert_rate": 0.46577
+    },
+    {
+      "threshold": 0.0112,
+      "total_cost_inr": 152820.14,
+      "alert_rate": 0.46409
+    },
+    {
+      "threshold": 0.01129,
+      "total_cost_inr": 152325.14,
+      "alert_rate": 0.46241
+    },
+    {
+      "threshold": 0.01137,
+      "total_cost_inr": 151830.14,
+      "alert_rate": 0.46073
+    },
+    {
+      "threshold": 0.01147,
+      "total_cost_inr": 151335.14,
+      "alert_rate": 0.45905
+    },
+    {
+      "threshold": 0.01161,
+      "total_cost_inr": 150840.14,
+      "alert_rate": 0.45737
+    },
+    {
+      "threshold": 0.01169,
+      "total_cost_inr": 150390.14,
+      "alert_rate": 0.45584
+    },
+    {
+      "threshold": 0.01177,
+      "total_cost_inr": 149895.14,
+      "alert_rate": 0.45416
+    },
+    {
+      "threshold": 0.01192,
+      "total_cost_inr": 149400.14,
+      "alert_rate": 0.45248
+    },
+    {
+      "threshold": 0.01207,
+      "total_cost_inr": 148905.14,
+      "alert_rate": 0.45079
+    },
+    {
+      "threshold": 0.01223,
+      "total_cost_inr": 148410.14,
+      "alert_rate": 0.44911
+    },
+    {
+      "threshold": 0.01233,
+      "total_cost_inr": 147915.14,
+      "alert_rate": 0.44743
+    },
+    {
+      "threshold": 0.01246,
+      "total_cost_inr": 147420.14,
+      "alert_rate": 0.44575
+    },
+    {
+      "threshold": 0.01264,
+      "total_cost_inr": 146925.14,
+      "alert_rate": 0.44407
+    },
+    {
+      "threshold": 0.01279,
+      "total_cost_inr": 146430.14,
+      "alert_rate": 0.44239
+    },
+    {
+      "threshold": 0.0129,
+      "total_cost_inr": 145935.14,
+      "alert_rate": 0.44071
+    },
+    {
+      "threshold": 0.01303,
+      "total_cost_inr": 145440.14,
+      "alert_rate": 0.43903
+    },
+    {
+      "threshold": 0.01317,
+      "total_cost_inr": 144945.14,
+      "alert_rate": 0.43735
+    },
+    {
+      "threshold": 0.01324,
+      "total_cost_inr": 144450.14,
+      "alert_rate": 0.43567
+    },
+    {
+      "threshold": 0.01334,
+      "total_cost_inr": 144000.14,
+      "alert_rate": 0.43414
+    },
+    {
+      "threshold": 0.01342,
+      "total_cost_inr": 143505.14,
+      "alert_rate": 0.43246
+    },
+    {
+      "threshold": 0.01358,
+      "total_cost_inr": 143010.14,
+      "alert_rate": 0.43078
+    },
+    {
+      "threshold": 0.01369,
+      "total_cost_inr": 142515.14,
+      "alert_rate": 0.4291
+    },
+    {
+      "threshold": 0.01381,
+      "total_cost_inr": 142020.14,
+      "alert_rate": 0.42741
+    },
+    {
+      "threshold": 0.01396,
+      "total_cost_inr": 141525.14,
+      "alert_rate": 0.42573
+    },
+    {
+      "threshold": 0.01412,
+      "total_cost_inr": 141030.14,
+      "alert_rate": 0.42405
+    },
+    {
+      "threshold": 0.01422,
+      "total_cost_inr": 140535.14,
+      "alert_rate": 0.42237
+    },
+    {
+      "threshold": 0.01433,
+      "total_cost_inr": 140040.14,
+      "alert_rate": 0.42069
+    },
+    {
+      "threshold": 0.01441,
+      "total_cost_inr": 139545.14,
+      "alert_rate": 0.41901
+    },
+    {
+      "threshold": 0.01455,
+      "total_cost_inr": 139050.14,
+      "alert_rate": 0.41733
+    },
+    {
+      "threshold": 0.01472,
+      "total_cost_inr": 138555.14,
+      "alert_rate": 0.41565
+    },
+    {
+      "threshold": 0.01485,
+      "total_cost_inr": 147142.79,
+      "alert_rate": 0.41397
+    },
+    {
+      "threshold": 0.01493,
+      "total_cost_inr": 146692.79,
+      "alert_rate": 0.41244
+    },
+    {
+      "threshold": 0.01497,
+      "total_cost_inr": 146197.79,
+      "alert_rate": 0.41076
+    },
+    {
+      "threshold": 0.01506,
+      "total_cost_inr": 145702.79,
+      "alert_rate": 0.40908
+    },
+    {
+      "threshold": 0.01518,
+      "total_cost_inr": 145207.79,
+      "alert_rate": 0.4074
+    },
+    {
+      "threshold": 0.0153,
+      "total_cost_inr": 144712.79,
+      "alert_rate": 0.40572
+    },
+    {
+      "threshold": 0.01541,
+      "total_cost_inr": 144217.79,
+      "alert_rate": 0.40403
+    },
+    {
+      "threshold": 0.01553,
+      "total_cost_inr": 143722.79,
+      "alert_rate": 0.40235
+    },
+    {
+      "threshold": 0.01565,
+      "total_cost_inr": 143227.79,
+      "alert_rate": 0.40067
+    },
+    {
+      "threshold": 0.01574,
+      "total_cost_inr": 142732.79,
+      "alert_rate": 0.39899
+    },
+    {
+      "threshold": 0.01596,
+      "total_cost_inr": 142237.79,
+      "alert_rate": 0.39731
+    },
+    {
+      "threshold": 0.01606,
+      "total_cost_inr": 141742.79,
+      "alert_rate": 0.39563
+    },
+    {
+      "threshold": 0.01625,
+      "total_cost_inr": 141247.79,
+      "alert_rate": 0.39395
+    },
+    {
+      "threshold": 0.01642,
+      "total_cost_inr": 140752.79,
+      "alert_rate": 0.39227
+    },
+    {
+      "threshold": 0.01655,
+      "total_cost_inr": 140302.79,
+      "alert_rate": 0.39074
+    },
+    {
+      "threshold": 0.01674,
+      "total_cost_inr": 139807.79,
+      "alert_rate": 0.38906
+    },
+    {
+      "threshold": 0.01691,
+      "total_cost_inr": 139312.79,
+      "alert_rate": 0.38738
+    },
+    {
+      "threshold": 0.01703,
+      "total_cost_inr": 138817.79,
+      "alert_rate": 0.3857
+    },
+    {
+      "threshold": 0.01723,
+      "total_cost_inr": 138322.79,
+      "alert_rate": 0.38402
+    },
+    {
+      "threshold": 0.01739,
+      "total_cost_inr": 137827.79,
+      "alert_rate": 0.38233
+    },
+    {
+      "threshold": 0.01755,
+      "total_cost_inr": 137332.79,
+      "alert_rate": 0.38065
+    },
+    {
+      "threshold": 0.01777,
+      "total_cost_inr": 136837.79,
+      "alert_rate": 0.37897
+    },
+    {
+      "threshold": 0.01816,
+      "total_cost_inr": 136342.79,
+      "alert_rate": 0.37729
+    },
+    {
+      "threshold": 0.01833,
+      "total_cost_inr": 135847.79,
+      "alert_rate": 0.37561
+    },
+    {
+      "threshold": 0.0185,
+      "total_cost_inr": 135352.79,
+      "alert_rate": 0.37393
+    },
+    {
+      "threshold": 0.01877,
+      "total_cost_inr": 134857.79,
+      "alert_rate": 0.37225
+    },
+    {
+      "threshold": 0.01896,
+      "total_cost_inr": 134362.79,
+      "alert_rate": 0.37057
+    },
+    {
+      "threshold": 0.01916,
+      "total_cost_inr": 133912.79,
+      "alert_rate": 0.36904
+    },
+    {
+      "threshold": 0.01927,
+      "total_cost_inr": 133417.79,
+      "alert_rate": 0.36736
+    },
+    {
+      "threshold": 0.01946,
+      "total_cost_inr": 132922.79,
+      "alert_rate": 0.36568
+    },
+    {
+      "threshold": 0.01961,
+      "total_cost_inr": 132427.79,
+      "alert_rate": 0.364
+    },
+    {
+      "threshold": 0.01983,
+      "total_cost_inr": 131932.79,
+      "alert_rate": 0.36232
+    },
+    {
+      "threshold": 0.02006,
+      "total_cost_inr": 131437.79,
+      "alert_rate": 0.36064
+    },
+    {
+      "threshold": 0.02026,
+      "total_cost_inr": 130942.79,
+      "alert_rate": 0.35895
+    },
+    {
+      "threshold": 0.02059,
+      "total_cost_inr": 130447.79,
+      "alert_rate": 0.35727
+    },
+    {
+      "threshold": 0.02087,
+      "total_cost_inr": 132787.41,
+      "alert_rate": 0.35559
+    },
+    {
+      "threshold": 0.02108,
+      "total_cost_inr": 132292.41,
+      "alert_rate": 0.35391
+    },
+    {
+      "threshold": 0.02146,
+      "total_cost_inr": 131797.41,
+      "alert_rate": 0.35223
+    },
+    {
+      "threshold": 0.02161,
+      "total_cost_inr": 131302.41,
+      "alert_rate": 0.35055
+    },
+    {
+      "threshold": 0.02185,
+      "total_cost_inr": 130807.41,
+      "alert_rate": 0.34887
+    },
+    {
+      "threshold": 0.02209,
+      "total_cost_inr": 130357.41,
+      "alert_rate": 0.34734
+    },
+    {
+      "threshold": 0.02227,
+      "total_cost_inr": 129862.41,
+      "alert_rate": 0.34566
+    },
+    {
+      "threshold": 0.02257,
+      "total_cost_inr": 135594.82,
+      "alert_rate": 0.34398
+    },
+    {
+      "threshold": 0.02286,
+      "total_cost_inr": 135099.82,
+      "alert_rate": 0.3423
+    },
+    {
+      "threshold": 0.02317,
+      "total_cost_inr": 134604.82,
+      "alert_rate": 0.34062
+    },
+    {
+      "threshold": 0.02354,
+      "total_cost_inr": 134109.82,
+      "alert_rate": 0.33894
+    },
+    {
+      "threshold": 0.02381,
+      "total_cost_inr": 133614.82,
+      "alert_rate": 0.33726
+    },
+    {
+      "threshold": 0.02402,
+      "total_cost_inr": 133119.82,
+      "alert_rate": 0.33557
+    },
+    {
+      "threshold": 0.02427,
+      "total_cost_inr": 132624.82,
+      "alert_rate": 0.33389
+    },
+    {
+      "threshold": 0.02444,
+      "total_cost_inr": 132129.82,
+      "alert_rate": 0.33221
+    },
+    {
+      "threshold": 0.02468,
+      "total_cost_inr": 131634.82,
+      "alert_rate": 0.33053
+    },
+    {
+      "threshold": 0.02499,
+      "total_cost_inr": 131139.82,
+      "alert_rate": 0.32885
+    },
+    {
+      "threshold": 0.02551,
+      "total_cost_inr": 131645.14,
+      "alert_rate": 0.32717
+    },
+    {
+      "threshold": 0.02575,
+      "total_cost_inr": 131195.14,
+      "alert_rate": 0.32564
+    },
+    {
+      "threshold": 0.02609,
+      "total_cost_inr": 130700.14,
+      "alert_rate": 0.32396
+    },
+    {
+      "threshold": 0.02635,
+      "total_cost_inr": 130205.14,
+      "alert_rate": 0.32228
+    },
+    {
+      "threshold": 0.02656,
+      "total_cost_inr": 129710.14,
+      "alert_rate": 0.3206
+    },
+    {
+      "threshold": 0.02693,
+      "total_cost_inr": 129215.14,
+      "alert_rate": 0.31892
+    },
+    {
+      "threshold": 0.02708,
+      "total_cost_inr": 128720.14,
+      "alert_rate": 0.31724
+    },
+    {
+      "threshold": 0.02733,
+      "total_cost_inr": 129693.36,
+      "alert_rate": 0.31556
+    },
+    {
+      "threshold": 0.0277,
+      "total_cost_inr": 129198.36,
+      "alert_rate": 0.31388
+    },
+    {
+      "threshold": 0.028,
+      "total_cost_inr": 128703.36,
+      "alert_rate": 0.31219
+    },
+    {
+      "threshold": 0.02832,
+      "total_cost_inr": 128208.36,
+      "alert_rate": 0.31051
+    },
+    {
+      "threshold": 0.0286,
+      "total_cost_inr": 127713.36,
+      "alert_rate": 0.30883
+    },
+    {
+      "threshold": 0.02887,
+      "total_cost_inr": 127218.36,
+      "alert_rate": 0.30715
+    },
+    {
+      "threshold": 0.02919,
+      "total_cost_inr": 126723.36,
+      "alert_rate": 0.30547
+    },
+    {
+      "threshold": 0.02937,
+      "total_cost_inr": 126273.36,
+      "alert_rate": 0.30394
+    },
+    {
+      "threshold": 0.02971,
+      "total_cost_inr": 125778.36,
+      "alert_rate": 0.30226
+    },
+    {
+      "threshold": 0.02992,
+      "total_cost_inr": 125283.36,
+      "alert_rate": 0.30058
+    },
+    {
+      "threshold": 0.03028,
+      "total_cost_inr": 124788.36,
+      "alert_rate": 0.2989
+    },
+    {
+      "threshold": 0.03057,
+      "total_cost_inr": 124293.36,
+      "alert_rate": 0.29722
+    },
+    {
+      "threshold": 0.03095,
+      "total_cost_inr": 123798.36,
+      "alert_rate": 0.29554
+    },
+    {
+      "threshold": 0.0313,
+      "total_cost_inr": 123303.36,
+      "alert_rate": 0.29386
+    },
+    {
+      "threshold": 0.03165,
+      "total_cost_inr": 122808.36,
+      "alert_rate": 0.29218
+    },
+    {
+      "threshold": 0.03205,
+      "total_cost_inr": 122313.36,
+      "alert_rate": 0.2905
+    },
+    {
+      "threshold": 0.03251,
+      "total_cost_inr": 121818.36,
+      "alert_rate": 0.28881
+    },
+    {
+      "threshold": 0.03279,
+      "total_cost_inr": 121323.36,
+      "alert_rate": 0.28713
+    },
+    {
+      "threshold": 0.0332,
+      "total_cost_inr": 120828.36,
+      "alert_rate": 0.28545
+    },
+    {
+      "threshold": 0.0338,
+      "total_cost_inr": 120333.36,
+      "alert_rate": 0.28377
+    },
+    {
+      "threshold": 0.0342,
+      "total_cost_inr": 119883.36,
+      "alert_rate": 0.28224
+    },
+    {
+      "threshold": 0.03449,
+      "total_cost_inr": 119388.36,
+      "alert_rate": 0.28056
+    },
+    {
+      "threshold": 0.03484,
+      "total_cost_inr": 118893.36,
+      "alert_rate": 0.27888
+    },
+    {
+      "threshold": 0.03517,
+      "total_cost_inr": 118398.36,
+      "alert_rate": 0.2772
+    },
+    {
+      "threshold": 0.03551,
+      "total_cost_inr": 117903.36,
+      "alert_rate": 0.27552
+    },
+    {
+      "threshold": 0.03614,
+      "total_cost_inr": 117408.36,
+      "alert_rate": 0.27384
+    },
+    {
+      "threshold": 0.03661,
+      "total_cost_inr": 116913.36,
+      "alert_rate": 0.27216
+    },
+    {
+      "threshold": 0.03706,
+      "total_cost_inr": 116418.36,
+      "alert_rate": 0.27048
+    },
+    {
+      "threshold": 0.03768,
+      "total_cost_inr": 115923.36,
+      "alert_rate": 0.2688
+    },
+    {
+      "threshold": 0.0384,
+      "total_cost_inr": 115428.36,
+      "alert_rate": 0.26711
+    },
+    {
+      "threshold": 0.0387,
+      "total_cost_inr": 114933.36,
+      "alert_rate": 0.26543
+    },
+    {
+      "threshold": 0.03925,
+      "total_cost_inr": 114438.36,
+      "alert_rate": 0.26375
+    },
+    {
+      "threshold": 0.03977,
+      "total_cost_inr": 113943.36,
+      "alert_rate": 0.26207
+    },
+    {
+      "threshold": 0.04021,
+      "total_cost_inr": 113493.36,
+      "alert_rate": 0.26054
+    },
+    {
+      "threshold": 0.04046,
+      "total_cost_inr": 112998.36,
+      "alert_rate": 0.25886
+    },
+    {
+      "threshold": 0.04094,
+      "total_cost_inr": 112503.36,
+      "alert_rate": 0.25718
+    },
+    {
+      "threshold": 0.04149,
+      "total_cost_inr": 114953.76,
+      "alert_rate": 0.2555
+    },
+    {
+      "threshold": 0.04215,
+      "total_cost_inr": 114458.76,
+      "alert_rate": 0.25382
+    },
+    {
+      "threshold": 0.04277,
+      "total_cost_inr": 113963.76,
+      "alert_rate": 0.25214
+    },
+    {
+      "threshold": 0.0436,
+      "total_cost_inr": 113468.76,
+      "alert_rate": 0.25046
+    },
+    {
+      "threshold": 0.04429,
+      "total_cost_inr": 112973.76,
+      "alert_rate": 0.24878
+    },
+    {
+      "threshold": 0.04472,
+      "total_cost_inr": 112478.76,
+      "alert_rate": 0.2471
+    },
+    {
+      "threshold": 0.04529,
+      "total_cost_inr": 111983.76,
+      "alert_rate": 0.24542
+    },
+    {
+      "threshold": 0.046,
+      "total_cost_inr": 111488.76,
+      "alert_rate": 0.24373
+    },
+    {
+      "threshold": 0.04695,
+      "total_cost_inr": 110993.76,
+      "alert_rate": 0.24205
+    },
+    {
+      "threshold": 0.04777,
+      "total_cost_inr": 110498.76,
+      "alert_rate": 0.24037
+    },
+    {
+      "threshold": 0.04905,
+      "total_cost_inr": 111480.9,
+      "alert_rate": 0.23884
+    },
+    {
+      "threshold": 0.04981,
+      "total_cost_inr": 110985.9,
+      "alert_rate": 0.23716
+    },
+    {
+      "threshold": 0.05027,
+      "total_cost_inr": 110490.9,
+      "alert_rate": 0.23548
+    },
+    {
+      "threshold": 0.05098,
+      "total_cost_inr": 109995.9,
+      "alert_rate": 0.2338
+    },
+    {
+      "threshold": 0.05226,
+      "total_cost_inr": 109500.9,
+      "alert_rate": 0.23212
+    },
+    {
+      "threshold": 0.05305,
+      "total_cost_inr": 109005.9,
+      "alert_rate": 0.23044
+    },
+    {
+      "threshold": 0.05446,
+      "total_cost_inr": 108510.9,
+      "alert_rate": 0.22876
+    },
+    {
+      "threshold": 0.05531,
+      "total_cost_inr": 108015.9,
+      "alert_rate": 0.22708
+    },
+    {
+      "threshold": 0.05599,
+      "total_cost_inr": 107520.9,
+      "alert_rate": 0.2254
+    },
+    {
+      "threshold": 0.05758,
+      "total_cost_inr": 110039.83,
+      "alert_rate": 0.22372
+    },
+    {
+      "threshold": 0.0589,
+      "total_cost_inr": 109544.83,
+      "alert_rate": 0.22204
+    },
+    {
+      "threshold": 0.0597,
+      "total_cost_inr": 109049.83,
+      "alert_rate": 0.22035
+    },
+    {
+      "threshold": 0.06048,
+      "total_cost_inr": 108554.83,
+      "alert_rate": 0.21867
+    },
+    {
+      "threshold": 0.06127,
+      "total_cost_inr": 111612.6,
+      "alert_rate": 0.21715
+    },
+    {
+      "threshold": 0.06195,
+      "total_cost_inr": 111117.6,
+      "alert_rate": 0.21546
+    },
+    {
+      "threshold": 0.06297,
+      "total_cost_inr": 110622.6,
+      "alert_rate": 0.21378
+    },
+    {
+      "threshold": 0.06399,
+      "total_cost_inr": 111851.07,
+      "alert_rate": 0.2121
+    },
+    {
+      "threshold": 0.06535,
+      "total_cost_inr": 111356.07,
+      "alert_rate": 0.21042
+    },
+    {
+      "threshold": 0.06629,
+      "total_cost_inr": 112180.87,
+      "alert_rate": 0.20874
+    },
+    {
+      "threshold": 0.06732,
+      "total_cost_inr": 111685.87,
+      "alert_rate": 0.20706
+    },
+    {
+      "threshold": 0.0688,
+      "total_cost_inr": 111190.87,
+      "alert_rate": 0.20538
+    },
+    {
+      "threshold": 0.07059,
+      "total_cost_inr": 110695.87,
+      "alert_rate": 0.2037
+    },
+    {
+      "threshold": 0.07188,
+      "total_cost_inr": 110200.87,
+      "alert_rate": 0.20202
+    },
+    {
+      "threshold": 0.07304,
+      "total_cost_inr": 109705.87,
+      "alert_rate": 0.20034
+    },
+    {
+      "threshold": 0.07421,
+      "total_cost_inr": 109210.87,
+      "alert_rate": 0.19866
+    },
+    {
+      "threshold": 0.07547,
+      "total_cost_inr": 108715.87,
+      "alert_rate": 0.19697
+    },
+    {
+      "threshold": 0.07644,
+      "total_cost_inr": 108265.87,
+      "alert_rate": 0.19545
+    },
+    {
+      "threshold": 0.07723,
+      "total_cost_inr": 109870.88,
+      "alert_rate": 0.19377
+    },
+    {
+      "threshold": 0.079,
+      "total_cost_inr": 109375.88,
+      "alert_rate": 0.19208
+    },
+    {
+      "threshold": 0.08035,
+      "total_cost_inr": 108880.88,
+      "alert_rate": 0.1904
+    },
+    {
+      "threshold": 0.08172,
+      "total_cost_inr": 108385.88,
+      "alert_rate": 0.18872
+    },
+    {
+      "threshold": 0.0832,
+      "total_cost_inr": 107890.88,
+      "alert_rate": 0.18704
+    },
+    {
+      "threshold": 0.08527,
+      "total_cost_inr": 107395.88,
+      "alert_rate": 0.18536
+    },
+    {
+      "threshold": 0.08685,
+      "total_cost_inr": 106900.88,
+      "alert_rate": 0.18368
+    },
+    {
+      "threshold": 0.08816,
+      "total_cost_inr": 109012.82,
+      "alert_rate": 0.182
+    },
+    {
+      "threshold": 0.0903,
+      "total_cost_inr": 108517.82,
+      "alert_rate": 0.18032
+    },
+    {
+      "threshold": 0.09178,
+      "total_cost_inr": 108022.82,
+      "alert_rate": 0.17864
+    },
+    {
+      "threshold": 0.0925,
+      "total_cost_inr": 109064.47,
+      "alert_rate": 0.17696
+    },
+    {
+      "threshold": 0.09426,
+      "total_cost_inr": 108569.47,
+      "alert_rate": 0.17528
+    },
+    {
+      "threshold": 0.09562,
+      "total_cost_inr": 108119.47,
+      "alert_rate": 0.17375
+    },
+    {
+      "threshold": 0.09731,
+      "total_cost_inr": 108963.12,
+      "alert_rate": 0.17207
+    },
+    {
+      "threshold": 0.09899,
+      "total_cost_inr": 108468.12,
+      "alert_rate": 0.17039
+    },
+    {
+      "threshold": 0.10121,
+      "total_cost_inr": 109065.3,
+      "alert_rate": 0.1687
+    },
+    {
+      "threshold": 0.10233,
+      "total_cost_inr": 108570.3,
+      "alert_rate": 0.16702
+    },
+    {
+      "threshold": 0.104,
+      "total_cost_inr": 108075.3,
+      "alert_rate": 0.16534
+    },
+    {
+      "threshold": 0.10655,
+      "total_cost_inr": 107580.3,
+      "alert_rate": 0.16366
+    },
+    {
+      "threshold": 0.1092,
+      "total_cost_inr": 107085.3,
+      "alert_rate": 0.16198
+    },
+    {
+      "threshold": 0.11201,
+      "total_cost_inr": 109150.26,
+      "alert_rate": 0.1603
+    },
+    {
+      "threshold": 0.11498,
+      "total_cost_inr": 108655.26,
+      "alert_rate": 0.15862
+    },
+    {
+      "threshold": 0.11752,
+      "total_cost_inr": 108160.26,
+      "alert_rate": 0.15694
+    },
+    {
+      "threshold": 0.11993,
+      "total_cost_inr": 107665.26,
+      "alert_rate": 0.15526
+    },
+    {
+      "threshold": 0.12157,
+      "total_cost_inr": 107170.26,
+      "alert_rate": 0.15358
+    },
+    {
+      "threshold": 0.12365,
+      "total_cost_inr": 106720.26,
+      "alert_rate": 0.15205
+    },
+    {
+      "threshold": 0.12596,
+      "total_cost_inr": 106225.26,
+      "alert_rate": 0.15037
+    },
+    {
+      "threshold": 0.13,
+      "total_cost_inr": 105730.26,
+      "alert_rate": 0.14869
+    },
+    {
+      "threshold": 0.1328,
+      "total_cost_inr": 105235.26,
+      "alert_rate": 0.147
+    },
+    {
+      "threshold": 0.13586,
+      "total_cost_inr": 104740.26,
+      "alert_rate": 0.14532
+    },
+    {
+      "threshold": 0.13901,
+      "total_cost_inr": 104245.26,
+      "alert_rate": 0.14364
+    },
+    {
+      "threshold": 0.14054,
+      "total_cost_inr": 103750.26,
+      "alert_rate": 0.14196
+    },
+    {
+      "threshold": 0.14501,
+      "total_cost_inr": 103255.26,
+      "alert_rate": 0.14028
+    },
+    {
+      "threshold": 0.14802,
+      "total_cost_inr": 102760.26,
+      "alert_rate": 0.1386
+    },
+    {
+      "threshold": 0.15074,
+      "total_cost_inr": 103519.38,
+      "alert_rate": 0.13692
+    },
+    {
+      "threshold": 0.15224,
+      "total_cost_inr": 103024.38,
+      "alert_rate": 0.13524
+    },
+    {
+      "threshold": 0.15458,
+      "total_cost_inr": 102529.38,
+      "alert_rate": 0.13356
+    },
+    {
+      "threshold": 0.15845,
+      "total_cost_inr": 102034.38,
+      "alert_rate": 0.13188
+    },
+    {
+      "threshold": 0.16127,
+      "total_cost_inr": 101584.38,
+      "alert_rate": 0.13035
+    },
+    {
+      "threshold": 0.1652,
+      "total_cost_inr": 101089.38,
+      "alert_rate": 0.12867
+    },
+    {
+      "threshold": 0.16949,
+      "total_cost_inr": 100594.38,
+      "alert_rate": 0.12699
+    },
+    {
+      "threshold": 0.1738,
+      "total_cost_inr": 100099.38,
+      "alert_rate": 0.12531
+    },
+    {
+      "threshold": 0.17705,
+      "total_cost_inr": 99604.38,
+      "alert_rate": 0.12362
+    },
+    {
+      "threshold": 0.18202,
+      "total_cost_inr": 99109.38,
+      "alert_rate": 0.12194
+    },
+    {
+      "threshold": 0.187,
+      "total_cost_inr": 100539.96,
+      "alert_rate": 0.12026
+    },
+    {
+      "threshold": 0.19179,
+      "total_cost_inr": 100044.96,
+      "alert_rate": 0.11858
+    },
+    {
+      "threshold": 0.19772,
+      "total_cost_inr": 101724.3,
+      "alert_rate": 0.1169
+    },
+    {
+      "threshold": 0.204,
+      "total_cost_inr": 101229.3,
+      "alert_rate": 0.11522
+    },
+    {
+      "threshold": 0.2098,
+      "total_cost_inr": 102738.03,
+      "alert_rate": 0.11354
+    },
+    {
+      "threshold": 0.2124,
+      "total_cost_inr": 102243.03,
+      "alert_rate": 0.11186
+    },
+    {
+      "threshold": 0.21792,
+      "total_cost_inr": 101748.03,
+      "alert_rate": 0.11018
+    },
+    {
+      "threshold": 0.22449,
+      "total_cost_inr": 105024.85,
+      "alert_rate": 0.10865
+    },
+    {
+      "threshold": 0.23106,
+      "total_cost_inr": 104529.85,
+      "alert_rate": 0.10697
+    },
+    {
+      "threshold": 0.23491,
+      "total_cost_inr": 106027.71,
+      "alert_rate": 0.10529
+    },
+    {
+      "threshold": 0.24053,
+      "total_cost_inr": 112276.15,
+      "alert_rate": 0.10361
+    },
+    {
+      "threshold": 0.24732,
+      "total_cost_inr": 111781.15,
+      "alert_rate": 0.10193
+    },
+    {
+      "threshold": 0.25496,
+      "total_cost_inr": 111286.15,
+      "alert_rate": 0.10024
+    },
+    {
+      "threshold": 0.26123,
+      "total_cost_inr": 110791.15,
+      "alert_rate": 0.09856
+    },
+    {
+      "threshold": 0.26923,
+      "total_cost_inr": 111996.37,
+      "alert_rate": 0.09688
+    },
+    {
+      "threshold": 0.27662,
+      "total_cost_inr": 115177.98,
+      "alert_rate": 0.0952
+    },
+    {
+      "threshold": 0.28912,
+      "total_cost_inr": 114682.98,
+      "alert_rate": 0.09352
+    },
+    {
+      "threshold": 0.29611,
+      "total_cost_inr": 114187.98,
+      "alert_rate": 0.09184
+    },
+    {
+      "threshold": 0.3044,
+      "total_cost_inr": 115339.83,
+      "alert_rate": 0.09016
+    },
+    {
+      "threshold": 0.30987,
+      "total_cost_inr": 120261.01,
+      "alert_rate": 0.08848
+    },
+    {
+      "threshold": 0.32097,
+      "total_cost_inr": 119811.01,
+      "alert_rate": 0.08695
+    },
+    {
+      "threshold": 0.32899,
+      "total_cost_inr": 123129.71,
+      "alert_rate": 0.08527
+    },
+    {
+      "threshold": 0.33474,
+      "total_cost_inr": 122634.71,
+      "alert_rate": 0.08359
+    },
+    {
+      "threshold": 0.34907,
+      "total_cost_inr": 122139.71,
+      "alert_rate": 0.08191
+    },
+    {
+      "threshold": 0.35653,
+      "total_cost_inr": 123745.09,
+      "alert_rate": 0.08023
+    },
+    {
+      "threshold": 0.37057,
+      "total_cost_inr": 123250.09,
+      "alert_rate": 0.07855
+    },
+    {
+      "threshold": 0.38101,
+      "total_cost_inr": 124011.53,
+      "alert_rate": 0.07686
+    },
+    {
+      "threshold": 0.39079,
+      "total_cost_inr": 123516.53,
+      "alert_rate": 0.07518
+    },
+    {
+      "threshold": 0.40098,
+      "total_cost_inr": 125037.2,
+      "alert_rate": 0.0735
+    },
+    {
+      "threshold": 0.41553,
+      "total_cost_inr": 124542.2,
+      "alert_rate": 0.07182
+    },
+    {
+      "threshold": 0.42929,
+      "total_cost_inr": 124047.2,
+      "alert_rate": 0.07014
+    },
+    {
+      "threshold": 0.43798,
+      "total_cost_inr": 123552.2,
+      "alert_rate": 0.06846
+    },
+    {
+      "threshold": 0.4513,
+      "total_cost_inr": 123057.2,
+      "alert_rate": 0.06678
+    },
+    {
+      "threshold": 0.46619,
+      "total_cost_inr": 125609.65,
+      "alert_rate": 0.06525
+    },
+    {
+      "threshold": 0.47815,
+      "total_cost_inr": 126855.17,
+      "alert_rate": 0.06357
+    },
+    {
+      "threshold": 0.48457,
+      "total_cost_inr": 127924.24,
+      "alert_rate": 0.06189
+    },
+    {
+      "threshold": 0.49453,
+      "total_cost_inr": 131342.85,
+      "alert_rate": 0.06021
+    },
+    {
+      "threshold": 0.50527,
+      "total_cost_inr": 133398.76,
+      "alert_rate": 0.05853
+    },
+    {
+      "threshold": 0.51322,
+      "total_cost_inr": 132903.76,
+      "alert_rate": 0.05685
+    },
+    {
+      "threshold": 0.52502,
+      "total_cost_inr": 137810.41,
+      "alert_rate": 0.05517
+    },
+    {
+      "threshold": 0.54329,
+      "total_cost_inr": 138807.23,
+      "alert_rate": 0.05348
+    },
+    {
+      "threshold": 0.54982,
+      "total_cost_inr": 138312.23,
+      "alert_rate": 0.0518
+    },
+    {
+      "threshold": 0.57107,
+      "total_cost_inr": 140535.32,
+      "alert_rate": 0.05012
+    },
+    {
+      "threshold": 0.58157,
+      "total_cost_inr": 140040.32,
+      "alert_rate": 0.04844
+    },
+    {
+      "threshold": 0.59138,
+      "total_cost_inr": 143401.96,
+      "alert_rate": 0.04676
+    },
+    {
+      "threshold": 0.59836,
+      "total_cost_inr": 145938.45,
+      "alert_rate": 0.04508
+    },
+    {
+      "threshold": 0.61336,
+      "total_cost_inr": 147450.97,
+      "alert_rate": 0.04355
+    },
+    {
+      "threshold": 0.62421,
+      "total_cost_inr": 146955.97,
+      "alert_rate": 0.04187
+    },
+    {
+      "threshold": 0.62923,
+      "total_cost_inr": 147920.74,
+      "alert_rate": 0.04019
+    },
+    {
+      "threshold": 0.64258,
+      "total_cost_inr": 151623.28,
+      "alert_rate": 0.03851
+    },
+    {
+      "threshold": 0.65186,
+      "total_cost_inr": 151128.28,
+      "alert_rate": 0.03683
+    },
+    {
+      "threshold": 0.67156,
+      "total_cost_inr": 150633.28,
+      "alert_rate": 0.03515
+    },
+    {
+      "threshold": 0.68754,
+      "total_cost_inr": 151490.86,
+      "alert_rate": 0.03347
+    },
+    {
+      "threshold": 0.69741,
+      "total_cost_inr": 150995.86,
+      "alert_rate": 0.03178
+    },
+    {
+      "threshold": 0.71151,
+      "total_cost_inr": 153473.62,
+      "alert_rate": 0.0301
+    },
+    {
+      "threshold": 0.72384,
+      "total_cost_inr": 153890.2,
+      "alert_rate": 0.02842
+    },
+    {
+      "threshold": 0.74179,
+      "total_cost_inr": 154822.26,
+      "alert_rate": 0.02674
+    },
+    {
+      "threshold": 0.7517,
+      "total_cost_inr": 159371.23,
+      "alert_rate": 0.02506
+    },
+    {
+      "threshold": 0.7672,
+      "total_cost_inr": 173127.61,
+      "alert_rate": 0.02338
+    },
+    {
+      "threshold": 0.77795,
+      "total_cost_inr": 179233.64,
+      "alert_rate": 0.02185
+    },
+    {
+      "threshold": 0.78715,
+      "total_cost_inr": 185601.24,
+      "alert_rate": 0.02017
+    },
+    {
+      "threshold": 0.79858,
+      "total_cost_inr": 186748.57,
+      "alert_rate": 0.01849
+    },
+    {
+      "threshold": 0.81117,
+      "total_cost_inr": 190408.48,
+      "alert_rate": 0.01681
+    },
+    {
+      "threshold": 0.82843,
+      "total_cost_inr": 196832.63,
+      "alert_rate": 0.01513
+    },
+    {
+      "threshold": 0.85008,
+      "total_cost_inr": 199314.93,
+      "alert_rate": 0.01345
+    },
+    {
+      "threshold": 0.86074,
+      "total_cost_inr": 208959.1,
+      "alert_rate": 0.01177
+    },
+    {
+      "threshold": 0.88275,
+      "total_cost_inr": 219620.86,
+      "alert_rate": 0.01009
+    },
+    {
+      "threshold": 0.89689,
+      "total_cost_inr": 225384.29,
+      "alert_rate": 0.0084
+    },
+    {
+      "threshold": 0.90706,
+      "total_cost_inr": 224889.29,
+      "alert_rate": 0.00672
+    },
+    {
+      "threshold": 0.92498,
+      "total_cost_inr": 232012.22,
+      "alert_rate": 0.00504
+    },
+    {
+      "threshold": 0.9351,
+      "total_cost_inr": 247299.26,
+      "alert_rate": 0.00336
+    },
+    {
+      "threshold": 0.95915,
+      "total_cost_inr": 270608.8,
+      "alert_rate": 0.00168
+    },
+    {
+      "threshold": 0.99356,
+      "total_cost_inr": 286476.7,
+      "alert_rate": 0.00015
+    }
+  ],
+  "pr_curve_test": [
+    {
+      "precision": 0.0436,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0438,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0439,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0441,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0442,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0444,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0445,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0447,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0448,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.045,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0451,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0453,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0454,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0456,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0457,
+      "recall": 0.9986
+    },
+    {
+      "precision": 0.0458,
+      "recall": 0.9986
+    },
+    {
+      "precision": 0.0459,
+      "recall": 0.9972
+    },
+    {
+      "precision": 0.0461,
+      "recall": 0.9972
+    },
+    {
+      "precision": 0.0463,
+      "recall": 0.9972
+    },
+    {
+      "precision": 0.0464,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0465,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0467,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0469,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.047,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0472,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0474,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0475,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0477,
+      "recall": 0.9958
+    },
+    {
+      "precision": 0.0478,
+      "recall": 0.993
+    },
+    {
+      "precision": 0.0479,
+      "recall": 0.993
+    },
+    {
+      "precision": 0.048,
+      "recall": 0.9916
+    },
+    {
+      "precision": 0.0482,
+      "recall": 0.9916
+    },
+    {
+      "precision": 0.0484,
+      "recall": 0.9916
+    },
+    {
+      "precision": 0.0486,
+      "recall": 0.9916
+    },
+    {
+      "precision": 0.0487,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0489,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0491,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0492,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0494,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0496,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0498,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.05,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0502,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0504,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0506,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0508,
+      "recall": 0.9902
+    },
+    {
+      "precision": 0.0509,
+      "recall": 0.9888
+    },
+    {
+      "precision": 0.0511,
+      "recall": 0.9888
+    },
+    {
+      "precision": 0.0513,
+      "recall": 0.9888
+    },
+    {
+      "precision": 0.0515,
+      "recall": 0.9888
+    },
+    {
+      "precision": 0.0517,
+      "recall": 0.9888
+    },
+    {
+      "precision": 0.0518,
+      "recall": 0.986
+    },
+    {
+      "precision": 0.052,
+      "recall": 0.986
+    },
+    {
+      "precision": 0.0522,
+      "recall": 0.986
+    },
+    {
+      "precision": 0.0524,
+      "recall": 0.986
+    },
+    {
+      "precision": 0.0525,
+      "recall": 0.9846
+    },
+    {
+      "precision": 0.0528,
+      "recall": 0.9846
+    },
+    {
+      "precision": 0.053,
+      "recall": 0.9846
+    },
+    {
+      "precision": 0.0531,
+      "recall": 0.9832
+    },
+    {
+      "precision": 0.0533,
+      "recall": 0.9832
+    },
+    {
+      "precision": 0.0535,
+      "recall": 0.9818
+    },
+    {
+      "precision": 0.0537,
+      "recall": 0.9818
+    },
+    {
+      "precision": 0.0539,
+      "recall": 0.9818
+    },
+    {
+      "precision": 0.0541,
+      "recall": 0.9804
+    },
+    {
+      "precision": 0.0541,
+      "recall": 0.9776
+    },
+    {
+      "precision": 0.0544,
+      "recall": 0.9776
+    },
+    {
+      "precision": 0.0546,
+      "recall": 0.9776
+    },
+    {
+      "precision": 0.0548,
+      "recall": 0.9762
+    },
+    {
+      "precision": 0.0548,
+      "recall": 0.9734
+    },
+    {
+      "precision": 0.0551,
+      "recall": 0.9734
+    },
+    {
+      "precision": 0.0552,
+      "recall": 0.9719
+    },
+    {
+      "precision": 0.0555,
+      "recall": 0.9719
+    },
+    {
+      "precision": 0.0557,
+      "recall": 0.9719
+    },
+    {
+      "precision": 0.0559,
+      "recall": 0.9719
+    },
+    {
+      "precision": 0.0561,
+      "recall": 0.9705
+    },
+    {
+      "precision": 0.0564,
+      "recall": 0.9705
+    },
+    {
+      "precision": 0.0566,
+      "recall": 0.9705
+    },
+    {
+      "precision": 0.0569,
+      "recall": 0.9705
+    },
+    {
+      "precision": 0.057,
+      "recall": 0.9691
+    },
+    {
+      "precision": 0.0573,
+      "recall": 0.9691
+    },
+    {
+      "precision": 0.0575,
+      "recall": 0.9677
+    },
+    {
+      "precision": 0.0576,
+      "recall": 0.9663
+    },
+    {
+      "precision": 0.0579,
+      "recall": 0.9663
+    },
+    {
+      "precision": 0.0582,
+      "recall": 0.9663
+    },
+    {
+      "precision": 0.0583,
+      "recall": 0.9649
+    },
+    {
+      "precision": 0.0586,
+      "recall": 0.9649
+    },
+    {
+      "precision": 0.0589,
+      "recall": 0.9649
+    },
+    {
+      "precision": 0.0591,
+      "recall": 0.9635
+    },
+    {
+      "precision": 0.0594,
+      "recall": 0.9635
+    },
+    {
+      "precision": 0.0596,
+      "recall": 0.9635
+    },
+    {
+      "precision": 0.0598,
+      "recall": 0.9621
+    },
+    {
+      "precision": 0.06,
+      "recall": 0.9607
+    },
+    {
+      "precision": 0.0601,
+      "recall": 0.9579
+    },
+    {
+      "precision": 0.0603,
+      "recall": 0.9565
+    },
+    {
+      "precision": 0.0606,
+      "recall": 0.9565
+    },
+    {
+      "precision": 0.0608,
+      "recall": 0.9551
+    },
+    {
+      "precision": 0.0611,
+      "recall": 0.9551
+    },
+    {
+      "precision": 0.0614,
+      "recall": 0.9551
+    },
+    {
+      "precision": 0.0615,
+      "recall": 0.9509
+    },
+    {
+      "precision": 0.0618,
+      "recall": 0.9509
+    },
+    {
+      "precision": 0.062,
+      "recall": 0.9495
+    },
+    {
+      "precision": 0.0621,
+      "recall": 0.9467
+    },
+    {
+      "precision": 0.0624,
+      "recall": 0.9467
+    },
+    {
+      "precision": 0.0627,
+      "recall": 0.9467
+    },
+    {
+      "precision": 0.063,
+      "recall": 0.9453
+    },
+    {
+      "precision": 0.0632,
+      "recall": 0.9439
+    },
+    {
+      "precision": 0.0635,
+      "recall": 0.9439
+    },
+    {
+      "precision": 0.0637,
+      "recall": 0.9425
+    },
+    {
+      "precision": 0.0639,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0642,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0646,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0649,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0652,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0656,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0659,
+      "recall": 0.9397
+    },
+    {
+      "precision": 0.0662,
+      "recall": 0.9383
+    },
+    {
+      "precision": 0.0664,
+      "recall": 0.9369
+    },
+    {
+      "precision": 0.0665,
+      "recall": 0.9327
+    },
+    {
+      "precision": 0.0669,
+      "recall": 0.9327
+    },
+    {
+      "precision": 0.0672,
+      "recall": 0.9327
+    },
+    {
+      "precision": 0.0674,
+      "recall": 0.9299
+    },
+    {
+      "precision": 0.0677,
+      "recall": 0.9285
+    },
+    {
+      "precision": 0.0679,
+      "recall": 0.9271
+    },
+    {
+      "precision": 0.0682,
+      "recall": 0.9257
+    },
+    {
+      "precision": 0.0684,
+      "recall": 0.9229
+    },
+    {
+      "precision": 0.0686,
+      "recall": 0.9201
+    },
+    {
+      "precision": 0.0687,
+      "recall": 0.9173
+    },
+    {
+      "precision": 0.0689,
+      "recall": 0.9144
+    },
+    {
+      "precision": 0.0693,
+      "recall": 0.9144
+    },
+    {
+      "precision": 0.0697,
+      "recall": 0.9144
+    },
+    {
+      "precision": 0.0701,
+      "recall": 0.9144
+    },
+    {
+      "precision": 0.0703,
+      "recall": 0.9116
+    },
+    {
+      "precision": 0.0706,
+      "recall": 0.9102
+    },
+    {
+      "precision": 0.0706,
+      "recall": 0.9046
+    },
+    {
+      "precision": 0.0709,
+      "recall": 0.9032
+    },
+    {
+      "precision": 0.0711,
+      "recall": 0.9004
+    },
+    {
+      "precision": 0.0713,
+      "recall": 0.8976
+    },
+    {
+      "precision": 0.0715,
+      "recall": 0.8948
+    },
+    {
+      "precision": 0.072,
+      "recall": 0.8948
+    },
+    {
+      "precision": 0.0722,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0726,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0726,
+      "recall": 0.8864
+    },
+    {
+      "precision": 0.0729,
+      "recall": 0.885
+    },
+    {
+      "precision": 0.0734,
+      "recall": 0.885
+    },
+    {
+      "precision": 0.0736,
+      "recall": 0.8822
+    },
+    {
+      "precision": 0.074,
+      "recall": 0.8808
+    },
+    {
+      "precision": 0.0743,
+      "recall": 0.8794
+    },
+    {
+      "precision": 0.0747,
+      "recall": 0.878
+    },
+    {
+      "precision": 0.0751,
+      "recall": 0.8766
+    },
+    {
+      "precision": 0.0754,
+      "recall": 0.8752
+    },
+    {
+      "precision": 0.0754,
+      "recall": 0.8696
+    },
+    {
+      "precision": 0.0756,
+      "recall": 0.8654
+    },
+    {
+      "precision": 0.076,
+      "recall": 0.864
+    },
+    {
+      "precision": 0.0763,
+      "recall": 0.8626
+    },
+    {
+      "precision": 0.0767,
+      "recall": 0.8612
+    },
+    {
+      "precision": 0.0771,
+      "recall": 0.8597
+    },
+    {
+      "precision": 0.0774,
+      "recall": 0.8569
+    },
+    {
+      "precision": 0.0779,
+      "recall": 0.8569
+    },
+    {
+      "precision": 0.0782,
+      "recall": 0.8541
+    },
+    {
+      "precision": 0.0785,
+      "recall": 0.8513
+    },
+    {
+      "precision": 0.0788,
+      "recall": 0.8485
+    },
+    {
+      "precision": 0.0791,
+      "recall": 0.8457
+    },
+    {
+      "precision": 0.0797,
+      "recall": 0.8457
+    },
+    {
+      "precision": 0.0801,
+      "recall": 0.8443
+    },
+    {
+      "precision": 0.0803,
+      "recall": 0.8401
+    },
+    {
+      "precision": 0.0807,
+      "recall": 0.8387
+    },
+    {
+      "precision": 0.0812,
+      "recall": 0.8373
+    },
+    {
+      "precision": 0.0815,
+      "recall": 0.8345
+    },
+    {
+      "precision": 0.0817,
+      "recall": 0.8303
+    },
+    {
+      "precision": 0.082,
+      "recall": 0.8275
+    },
+    {
+      "precision": 0.0822,
+      "recall": 0.8233
+    },
+    {
+      "precision": 0.0826,
+      "recall": 0.8205
+    },
+    {
+      "precision": 0.0831,
+      "recall": 0.8191
+    },
+    {
+      "precision": 0.0836,
+      "recall": 0.8177
+    },
+    {
+      "precision": 0.0841,
+      "recall": 0.8163
+    },
+    {
+      "precision": 0.0846,
+      "recall": 0.8149
+    },
+    {
+      "precision": 0.0851,
+      "recall": 0.8135
+    },
+    {
+      "precision": 0.0854,
+      "recall": 0.8093
+    },
+    {
+      "precision": 0.0856,
+      "recall": 0.805
+    },
+    {
+      "precision": 0.0859,
+      "recall": 0.8008
+    },
+    {
+      "precision": 0.0864,
+      "recall": 0.7994
+    },
+    {
+      "precision": 0.0867,
+      "recall": 0.7952
+    },
+    {
+      "precision": 0.0871,
+      "recall": 0.7924
+    },
+    {
+      "precision": 0.0874,
+      "recall": 0.7882
+    },
+    {
+      "precision": 0.0878,
+      "recall": 0.7854
+    },
+    {
+      "precision": 0.0885,
+      "recall": 0.7854
+    },
+    {
+      "precision": 0.089,
+      "recall": 0.7826
+    },
+    {
+      "precision": 0.0891,
+      "recall": 0.777
+    },
+    {
+      "precision": 0.0899,
+      "recall": 0.777
+    },
+    {
+      "precision": 0.0904,
+      "recall": 0.7742
+    },
+    {
+      "precision": 0.0908,
+      "recall": 0.7714
+    },
+    {
+      "precision": 0.0915,
+      "recall": 0.77
+    },
+    {
+      "precision": 0.092,
+      "recall": 0.7672
+    },
+    {
+      "precision": 0.0923,
+      "recall": 0.763
+    },
+    {
+      "precision": 0.0932,
+      "recall": 0.763
+    },
+    {
+      "precision": 0.0934,
+      "recall": 0.7574
+    },
+    {
+      "precision": 0.0939,
+      "recall": 0.7546
+    },
+    {
+      "precision": 0.0944,
+      "recall": 0.7518
+    },
+    {
+      "precision": 0.0952,
+      "recall": 0.7504
+    },
+    {
+      "precision": 0.0955,
+      "recall": 0.7461
+    },
+    {
+      "precision": 0.0959,
+      "recall": 0.7419
+    },
+    {
+      "precision": 0.0962,
+      "recall": 0.7363
+    },
+    {
+      "precision": 0.0967,
+      "recall": 0.7335
+    },
+    {
+      "precision": 0.0973,
+      "recall": 0.7307
+    },
+    {
+      "precision": 0.098,
+      "recall": 0.7279
+    },
+    {
+      "precision": 0.098,
+      "recall": 0.7209
+    },
+    {
+      "precision": 0.0987,
+      "recall": 0.7181
+    },
+    {
+      "precision": 0.0993,
+      "recall": 0.7153
+    },
+    {
+      "precision": 0.1,
+      "recall": 0.7125
+    },
+    {
+      "precision": 0.1008,
+      "recall": 0.7111
+    },
+    {
+      "precision": 0.1019,
+      "recall": 0.7111
+    },
+    {
+      "precision": 0.1024,
+      "recall": 0.7069
+    },
+    {
+      "precision": 0.1028,
+      "recall": 0.7013
+    },
+    {
+      "precision": 0.1031,
+      "recall": 0.6957
+    },
+    {
+      "precision": 0.104,
+      "recall": 0.6942
+    },
+    {
+      "precision": 0.1048,
+      "recall": 0.6914
+    },
+    {
+      "precision": 0.1049,
+      "recall": 0.6844
+    },
+    {
+      "precision": 0.1062,
+      "recall": 0.6844
+    },
+    {
+      "precision": 0.107,
+      "recall": 0.6816
+    },
+    {
+      "precision": 0.1072,
+      "recall": 0.6746
+    },
+    {
+      "precision": 0.1085,
+      "recall": 0.6746
+    },
+    {
+      "precision": 0.1091,
+      "recall": 0.6704
+    },
+    {
+      "precision": 0.1091,
+      "recall": 0.662
+    },
+    {
+      "precision": 0.1098,
+      "recall": 0.6578
+    },
+    {
+      "precision": 0.1112,
+      "recall": 0.6578
+    },
+    {
+      "precision": 0.1119,
+      "recall": 0.6536
+    },
+    {
+      "precision": 0.1119,
+      "recall": 0.6452
+    },
+    {
+      "precision": 0.1132,
+      "recall": 0.6438
+    },
+    {
+      "precision": 0.1142,
+      "recall": 0.641
+    },
+    {
+      "precision": 0.1148,
+      "recall": 0.6353
+    },
+    {
+      "precision": 0.1158,
+      "recall": 0.6325
+    },
+    {
+      "precision": 0.1162,
+      "recall": 0.6255
+    },
+    {
+      "precision": 0.117,
+      "recall": 0.6213
+    },
+    {
+      "precision": 0.1174,
+      "recall": 0.6143
+    },
+    {
+      "precision": 0.118,
+      "recall": 0.6087
+    },
+    {
+      "precision": 0.1187,
+      "recall": 0.6031
+    },
+    {
+      "precision": 0.1194,
+      "recall": 0.5975
+    },
+    {
+      "precision": 0.1198,
+      "recall": 0.5905
+    },
+    {
+      "precision": 0.1199,
+      "recall": 0.582
+    },
+    {
+      "precision": 0.1212,
+      "recall": 0.5792
+    },
+    {
+      "precision": 0.1229,
+      "recall": 0.5778
+    },
+    {
+      "precision": 0.1237,
+      "recall": 0.5722
+    },
+    {
+      "precision": 0.1236,
+      "recall": 0.5624
+    },
+    {
+      "precision": 0.125,
+      "recall": 0.5596
+    },
+    {
+      "precision": 0.1262,
+      "recall": 0.5554
+    },
+    {
+      "precision": 0.1268,
+      "recall": 0.5484
+    },
+    {
+      "precision": 0.1281,
+      "recall": 0.5442
+    },
+    {
+      "precision": 0.1297,
+      "recall": 0.5414
+    },
+    {
+      "precision": 0.1304,
+      "recall": 0.5344
+    },
+    {
+      "precision": 0.1318,
+      "recall": 0.5302
+    },
+    {
+      "precision": 0.1322,
+      "recall": 0.5217
+    },
+    {
+      "precision": 0.1337,
+      "recall": 0.5175
+    },
+    {
+      "precision": 0.1342,
+      "recall": 0.5091
+    },
+    {
+      "precision": 0.1362,
+      "recall": 0.5063
+    },
+    {
+      "precision": 0.1382,
+      "recall": 0.5035
+    },
+    {
+      "precision": 0.14,
+      "recall": 0.4993
+    },
+    {
+      "precision": 0.1422,
+      "recall": 0.4965
+    },
+    {
+      "precision": 0.1425,
+      "recall": 0.4867
+    },
+    {
+      "precision": 0.1436,
+      "recall": 0.4797
+    },
+    {
+      "precision": 0.1457,
+      "recall": 0.4755
+    },
+    {
+      "precision": 0.1452,
+      "recall": 0.4628
+    },
+    {
+      "precision": 0.1465,
+      "recall": 0.4558
+    },
+    {
+      "precision": 0.1483,
+      "recall": 0.4502
+    },
+    {
+      "precision": 0.1502,
+      "recall": 0.4446
+    },
+    {
+      "precision": 0.1507,
+      "recall": 0.4348
+    },
+    {
+      "precision": 0.1528,
+      "recall": 0.4292
+    },
+    {
+      "precision": 0.155,
+      "recall": 0.4236
+    },
+    {
+      "precision": 0.1573,
+      "recall": 0.418
+    },
+    {
+      "precision": 0.1613,
+      "recall": 0.4165
+    },
+    {
+      "precision": 0.1628,
+      "recall": 0.4081
+    },
+    {
+      "precision": 0.1656,
+      "recall": 0.4025
+    },
+    {
+      "precision": 0.1662,
+      "recall": 0.3913
+    },
+    {
+      "precision": 0.1692,
+      "recall": 0.3857
+    },
+    {
+      "precision": 0.1725,
+      "recall": 0.3801
+    },
+    {
+      "precision": 0.176,
+      "recall": 0.3745
+    },
+    {
+      "precision": 0.1805,
+      "recall": 0.3703
+    },
+    {
+      "precision": 0.1824,
+      "recall": 0.3604
+    },
+    {
+      "precision": 0.1852,
+      "recall": 0.352
+    },
+    {
+      "precision": 0.1891,
+      "recall": 0.345
+    },
+    {
+      "precision": 0.1925,
+      "recall": 0.3366
+    },
+    {
+      "precision": 0.1953,
+      "recall": 0.3268
+    },
+    {
+      "precision": 0.1993,
+      "recall": 0.3184
+    },
+    {
+      "precision": 0.2074,
+      "recall": 0.3156
+    },
+    {
+      "precision": 0.2114,
+      "recall": 0.3058
+    },
+    {
+      "precision": 0.2149,
+      "recall": 0.2945
+    },
+    {
+      "precision": 0.2243,
+      "recall": 0.2903
+    },
+    {
+      "precision": 0.2348,
+      "recall": 0.2861
+    },
+    {
+      "precision": 0.2417,
+      "recall": 0.2763
+    },
+    {
+      "precision": 0.251,
+      "recall": 0.2679
+    },
+    {
+      "precision": 0.2631,
+      "recall": 0.2609
+    },
+    {
+      "precision": 0.2726,
+      "recall": 0.2496
+    },
+    {
+      "precision": 0.2855,
+      "recall": 0.2398
+    },
+    {
+      "precision": 0.2881,
+      "recall": 0.2202
+    },
+    {
+      "precision": 0.2912,
+      "recall": 0.2006
+    },
+    {
+      "precision": 0.3043,
+      "recall": 0.1865
+    },
+    {
+      "precision": 0.3159,
+      "recall": 0.1697
+    },
+    {
+      "precision": 0.3495,
+      "recall": 0.1613
+    },
+    {
+      "precision": 0.3564,
+      "recall": 0.1374
+    },
+    {
+      "precision": 0.3756,
+      "recall": 0.1164
+    },
+    {
+      "precision": 0.3772,
+      "recall": 0.0884
+    },
+    {
+      "precision": 0.4159,
+      "recall": 0.0659
+    },
+    {
+      "precision": 0.4746,
+      "recall": 0.0393
+    },
+    {
+      "precision": 0.6,
+      "recall": 0.0042
+    }
+  ],
+  "threshold_used": 0.9071,
+  "precision": 0.4153,
+  "recall": 0.0687,
+  "f1": 0.1179,
+  "roc_auc": 0.7889,
+  "false_positive_rate": 0.0044,
+  "confusion_matrix": {
+    "tn": 15563,
+    "fp": 69,
+    "fn": 664,
+    "tp": 49
+  },
+  "false_positive_monetary_cost_inr": 3105.0,
+  "fraud_amount_prevented_inr": 122970.73,
+  "fraud_amount_missed_inr": 1009028.37,
+  "net_benefit_vs_no_model_inr": 156615.73,
+  "spike_specific": {
+    "n_ring_labelled_txns": 485,
+    "spike_recall": 0.0371,
+    "note": "Standalone per-transaction model only. The combined system's figure is added by model/spike_detector.py.",
+    "ring_txn_recall_standalone": 0.0371
+  },
+  "methodology_note": "Synthetic data with a known generating process (see artifacts/data_generation_summary.json). Temporal three-way split; thresholds fitted on validation; per-merchant amount statistics fitted on train only to avoid leakage into the test window.",
+  "combined_system": {
+    "description": "Per-transaction XGBoost score above the budget threshold, OR a transaction inside a merchant-bucket flagged anomalous by the temporal layer (z>=3.0 vs that merchant's strictly-prior expanding baseline, min 5 txns per 15-minute bucket) whose cluster-level ring-evidence score clears 0.530, a bar fitted on the validation window under a 2% alert budget.",
+    "ring_evidence_escalation_threshold": 0.53,
+    "aggregation_axes": [
+      "merchant_id",
+      "device_id",
+      "ip_address"
+    ],
+    "population_absolute_thresholds": {
+      "merchant_id": 8,
+      "device_id": 7,
+      "ip_address": 7
+    },
+    "baseline_is_strictly_backward_looking": true,
+    "precision": 0.6026,
+    "recall": 0.4614,
+    "f1": 0.5226,
+    "alert_rate": 0.0334,
+    "false_positive_rate": 0.0139,
+    "confusion_matrix": {
+      "tn": 15415,
+      "fp": 217,
+      "fn": 384,
+      "tp": 329
+    },
+    "false_positive_monetary_cost_inr": 9765.0,
+    "fraud_amount_prevented_inr": 361840.03,
+    "net_benefit_vs_no_model_inr": 598825.03,
+    "spike_events_detected": 4,
+    "spike_events_total": 4,
+    "ring_txn_recall": 0.5918
+  },
+  "standalone_vs_combined": {
+    "standalone": {
+      "system": "standalone_xgboost",
+      "precision": 0.4153,
+      "recall": 0.0687,
+      "f1": 0.1179,
+      "alert_rate": 0.0072,
+      "false_positive_rate": 0.0044,
+      "confusion_matrix": {
+        "tn": 15563,
+        "fp": 69,
+        "fn": 664,
+        "tp": 49
+      },
+      "false_positive_monetary_cost_inr": 3105.0,
+      "fraud_amount_prevented_inr": 122970.73,
+      "total_cost_inr": 1510133.37,
+      "net_benefit_vs_no_model_inr": 156615.73
+    },
+    "combined": {
+      "system": "combined_two_layer",
+      "precision": 0.6026,
+      "recall": 0.4614,
+      "f1": 0.5226,
+      "alert_rate": 0.0334,
+      "false_positive_rate": 0.0139,
+      "confusion_matrix": {
+        "tn": 15415,
+        "fp": 217,
+        "fn": 384,
+        "tp": 329
+      },
+      "false_positive_monetary_cost_inr": 9765.0,
+      "fraud_amount_prevented_inr": 361840.03,
+      "total_cost_inr": 1067924.07,
+      "net_benefit_vs_no_model_inr": 598825.03
+    }
+  },
+  "marginal_contribution_of_temporal_layer": {
+    "additional_true_positives": 280,
+    "additional_false_positives": 148,
+    "additional_review_cost_inr": 6660.0,
+    "additional_fraud_value_caught_inr": 238869.3,
+    "review_cost_per_additional_fraud_caught_inr": 23.79
+  }
+}

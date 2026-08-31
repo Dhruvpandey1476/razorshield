@@ -1,0 +1,170 @@
+{
+  "pay_5268e4068b974a": [
+    {
+      "feature": "merchant_risk_score",
+      "shap_value": 2.0186
+    },
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.5591
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": -0.9799
+    }
+  ],
+  "pay_53a5e7818d9c4f": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.2677
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": 0.6161
+    },
+    {
+      "feature": "is_new_customer",
+      "shap_value": 0.496
+    }
+  ],
+  "pay_9242ccd236e34e": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 2.0956
+    },
+    {
+      "feature": "ip_txn_count_1h",
+      "shap_value": 0.8966
+    },
+    {
+      "feature": "hour_of_day",
+      "shap_value": -0.4916
+    }
+  ],
+  "pay_88092d58fcf847": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.9575
+    },
+    {
+      "feature": "ip_txn_count_1h",
+      "shap_value": 0.7622
+    },
+    {
+      "feature": "hour_of_day",
+      "shap_value": -0.6025
+    }
+  ],
+  "pay_451b8f3bb25f40": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.8008
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": -0.8085
+    },
+    {
+      "feature": "is_night",
+      "shap_value": 0.7982
+    }
+  ],
+  "pay_d623b362033c4f": [
+    {
+      "feature": "merchant_risk_score",
+      "shap_value": 1.6552
+    },
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.5834
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": -1.1168
+    }
+  ],
+  "pay_2908c2aeb02547": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.822
+    },
+    {
+      "feature": "merchant_risk_score",
+      "shap_value": 1.5056
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": -0.8583
+    }
+  ],
+  "pay_02e0a6d5e90f49": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.8104
+    },
+    {
+      "feature": "billing_shipping_mismatch",
+      "shap_value": 1.5324
+    },
+    {
+      "feature": "ip_txn_count_1h",
+      "shap_value": 0.7646
+    }
+  ],
+  "pay_78881a61803a44": [
+    {
+      "feature": "billing_shipping_mismatch",
+      "shap_value": 1.7113
+    },
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.2103
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": -0.4416
+    }
+  ],
+  "pay_9c3dc17c7f9141": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.5323
+    },
+    {
+      "feature": "amount_inr",
+      "shap_value": 1.0031
+    },
+    {
+      "feature": "amount_zscore_for_merchant",
+      "shap_value": 0.3146
+    }
+  ],
+  "pay_37ff6a5ccd7543": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 2.0379
+    },
+    {
+      "feature": "billing_shipping_mismatch",
+      "shap_value": 1.5525
+    },
+    {
+      "feature": "ip_txn_count_1h",
+      "shap_value": 0.9538
+    }
+  ],
+  "pay_2264229373394a": [
+    {
+      "feature": "device_txn_count_1h",
+      "shap_value": 1.8627
+    },
+    {
+      "feature": "ip_txn_count_1h",
+      "shap_value": 0.7467
+    },
+    {
+      "feature": "amount_zscore_for_merchant",
+      "shap_value": -0.3871
+    }
+  ]
+}
