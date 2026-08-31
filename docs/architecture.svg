@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 640" width="1180" height="640" role="img" aria-labelledby="tt ds">
+  <title id="tt">RazorShield two-layer detection architecture</title>
+  <desc id="ds">Three events traced through the system. A dense-device card-testing ring is visible to the per-transaction model and to the temporal layer, and is blocked. A distributed ring leaves no per-transaction signal, is caught only by the temporal layer, and is sent to review. A legitimate flash sale is flagged as a volume anomaly by the temporal layer but held at the ring-evidence gate, and is allowed.</desc>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4b5563"/>
+    </marker>
+    <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#15803d"/>
+    </marker>
+  </defs>
+
+  <rect width="1180" height="640" fill="#ffffff"/>
+  <rect x="0.5" y="0.5" width="1179" height="639" fill="none" stroke="#e5e7eb"/>
+
+  <text x="32" y="42" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#111827">RazorShield — why one model isn't enough</text>
+  <text x="32" y="68" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" fill="#6b7280">Three events from the same held-out window, traced through both layers. Measured, not illustrative.</text>
+
+  <!-- layer bands -->
+  <rect x="286" y="98" width="188" height="424" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <rect x="516" y="98" width="206" height="424" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <rect x="764" y="98" width="176" height="424" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+  <rect x="982" y="98" width="166" height="424" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.5"/>
+
+  <text x="380" y="124" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#1d4ed8">Layer 1 · XGBoost</text>
+  <text x="380" y="143" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#3b5bdb">scores one row at a time</text>
+  <text x="380" y="161" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6b7280">AUC 0.9018 · ceiling 0.9306</text>
+
+  <text x="619" y="124" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#6d28d9">Layer 2 · Temporal</text>
+  <text x="619" y="143" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#7c3aed">merchant × device × IP</text>
+  <text x="619" y="161" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6b7280">15-min buckets · prior-only baseline</text>
+
+  <text x="852" y="124" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#b45309">Ring-evidence gate</text>
+  <text x="852" y="143" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#d97706">escalate ≥ 0.53</text>
+  <text x="852" y="161" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6b7280">fitted on validation</text>
+
+  <text x="1065" y="124" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#15803d">Layer 3 · Agent</text>
+  <text x="1065" y="143" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#16a34a">deterministic decision</text>
+  <text x="1065" y="161" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6b7280">LLM runs after, cannot alter</text>
+
+  <!-- ===== Lane A : dense-device ring ===== -->
+  <text x="32" y="222" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">Card-testing ring</text>
+  <text x="32" y="241" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">140 txns · 7 devices</text>
+  <text x="32" y="258" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">dense pool</text>
+
+  <line x1="196" y1="232" x2="280" y2="232" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <circle cx="380" cy="232" r="9" fill="#2563eb"/>
+  <text x="380" y="262" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#1d4ed8">visible · 6.4%</text>
+  <line x1="474" y1="232" x2="510" y2="232" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <circle cx="619" cy="232" r="9" fill="#7c3aed"/>
+  <text x="619" y="262" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6d28d9">cluster flagged · 97.1%</text>
+  <line x1="722" y1="232" x2="758" y2="232" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="852" y="228" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#15803d">0.88 ✓</text>
+  <text x="852" y="248" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b7280">escalates</text>
+  <line x1="940" y1="232" x2="976" y2="232" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <rect x="1000" y="214" width="130" height="36" rx="6" fill="#dc2626"/>
+  <text x="1065" y="238" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">BLOCK · 0.889</text>
+
+  <!-- ===== Lane B : distributed ring ===== -->
+  <text x="32" y="342" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">Distributed ring</text>
+  <text x="32" y="361" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">95 txns · 60 devices</text>
+  <text x="32" y="378" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">near-unique devices</text>
+
+  <line x1="196" y1="352" x2="280" y2="352" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <circle cx="380" cy="352" r="9" fill="#ffffff" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="3 2"/>
+  <text x="380" y="382" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#b91c1c">no signal · 1.1%</text>
+  <text x="380" y="399" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11" fill="#6b7280">nothing to learn from one row</text>
+  <line x1="474" y1="352" x2="510" y2="352" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+  <circle cx="619" cy="352" r="9" fill="#7c3aed"/>
+  <text x="619" y="382" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6d28d9">cluster flagged · 75.8%</text>
+  <line x1="722" y1="352" x2="758" y2="352" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="852" y="348" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#15803d">0.76 ✓</text>
+  <text x="852" y="368" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" fill="#6b7280">escalates</text>
+  <line x1="940" y1="352" x2="976" y2="352" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <rect x="1000" y="334" width="130" height="36" rx="6" fill="#d97706"/>
+  <text x="1065" y="358" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">REVIEW · 0.530</text>
+
+  <!-- ===== Lane C : legitimate flash sale ===== -->
+  <text x="32" y="462" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#111827">Flash sale · CTRL-001</text>
+  <text x="32" y="481" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" fill="#6b7280">110 txns · real customers</text>
+  <text x="32" y="498" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#15803d">NOT fraud — the control</text>
+
+  <line x1="196" y1="472" x2="280" y2="472" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <circle cx="380" cy="472" r="9" fill="#ffffff" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="3 2"/>
+  <text x="380" y="502" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#6b7280">no signal · 0.0%</text>
+  <line x1="474" y1="472" x2="510" y2="472" stroke="#9ca3af" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+  <circle cx="619" cy="472" r="9" fill="#7c3aed"/>
+  <text x="619" y="502" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#6d28d9">volume anomaly — correctly</text>
+  <line x1="722" y1="472" x2="758" y2="472" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="852" y="468" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#b91c1c">0.23 ✕</text>
+  <text x="852" y="488" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#b91c1c">held — no ring evidence</text>
+  <line x1="940" y1="472" x2="976" y2="472" stroke="#4b5563" stroke-width="1.6" marker-end="url(#ar)"/>
+  <rect x="1000" y="454" width="130" height="36" rx="6" fill="#16a34a"/>
+  <text x="1065" y="478" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff">ALLOW · 0.197</text>
+
+  <!-- takeaway strip -->
+  <line x1="32" y1="552" x2="1148" y2="552" stroke="#e5e7eb"/>
+  <text x="32" y="580" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13.5" fill="#111827">
+    <tspan font-weight="700" fill="#6d28d9">Layer 2 exists</tspan><tspan fill="#374151"> because a distributed ring leaves no per-transaction signal.  </tspan><tspan font-weight="700" fill="#b45309">The gate exists</tspan><tspan fill="#374151"> because a flash sale is a volume anomaly too.</tspan>
+  </text>
+  <text x="32" y="606" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#6b7280">Held-out window · thresholds fitted on validation · two-layer precision 60.3% / recall 46.1% at 1.4% false-positive rate · 4 of 4 rings detected · 0 of 110 control transactions flagged</text>
+</svg>

@@ -66,34 +66,11 @@ information simply is not in the row.
 
 That is why RazorShield is a two-layer system:
 
-```
-Razorpay transaction stream
-            │
-            ▼
-  ┌─────────────────────┐
-  │  XGBoost risk model │  per-transaction fraud probability
-  └──────────┬──────────┘   threshold chosen on VALIDATION, under a
-             │              stated review-capacity budget
-             ▼
-  ┌──────────────────────────────────┐
-  │  Temporal anomaly layer          │  15-min buckets on THREE axes:
-  │  merchant × device × IP          │  merchant, device, IP
-  │  strictly-prior expanding        │  + cluster ring-evidence score
-  │  baseline (no look-ahead)        │
-  └──────────┬───────────────────────┘
-             │  cluster escalated
-             ▼
-  ┌──────────────────────────────────┐
-  │  LangGraph investigation agent   │  9 nodes: 7 deterministic,
-  │  (decision is deterministic)     │  2 optional LLM, always audited
-  └──────────┬───────────────────────┘
-             │
-             ▼
-  SHAP → root cause → severity → ALLOW / REVIEW / BLOCK → narration
-             │
-             ▼
-     Audit trail (JSONL, append-only)
-```
+<p align="center">
+  <img src="docs/architecture.svg" alt="Three events from the same held-out window traced through both layers: a dense-device card-testing ring is visible to the per-transaction model and blocked; a distributed ring leaves no per-transaction signal, is caught only by the temporal layer, and goes to review; a legitimate flash sale is flagged as a volume anomaly but held at the ring-evidence gate and allowed." width="100%">
+</p>
+
+<p align="center"><sub>Every figure in this diagram is read from <code>artifacts/</code>. The flash sale is the control: the temporal layer flags it, and the gate is what stops it.</sub></p>
 
 **Three axes, not one.** A ring that spreads thinly across many
 merchants stays under any per-merchant volume alarm by construction —
